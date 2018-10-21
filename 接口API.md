@@ -296,7 +296,7 @@
 添加收货地址：
 
 **url:/addAddress**
-
+**json格式**
 参数：
 
 {
@@ -320,7 +320,7 @@
 修改收获地址：
 
 **url:/updateAddress**
-
+**json格式**
 参数：
 
 {
