@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yidong.config.WxPayConfig;
 import com.yidong.model.User;
 import com.yidong.service.UserService;
+import com.yidong.util.TencentSmsSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,8 +64,9 @@ public class LoginController {
                 }
                 else{
                     openId = jsonObj.get("openid").toString();
-                    //判断用户是否已经存在，如果存在设置vip信息
+                    //判断用户是否已经存在
                     if((user=userService.selectByPrimaryKey(openId))!=null) {
+                        userService.updateByPrimaryKey(openId,nickName,avatarUrl);
                     }
                     else{
                         //如果用户不存在，添加到数据库中
@@ -86,5 +88,32 @@ public class LoginController {
             return new ResponseEntity(null, HttpStatus.GATEWAY_TIMEOUT);
         }
         return new ResponseEntity(user, HttpStatus.OK);
+    }
+
+    /**
+     * 获取验证码
+     * @param phone
+     * @return 验证码
+     */
+    @RequestMapping(value="/getSms")
+    public String getSms(@RequestParam String phone){
+        return TencentSmsSender.sendMessage(phone);
+    }
+
+    /***
+     * 设置用户的手机号
+     * @param openId
+     * @param phone
+     * @return
+     */
+    @RequestMapping(value = "/setPhone")
+    public ResponseEntity<String> setPhone(@RequestParam String openId,@RequestParam String phone) {
+       boolean flag =  userService.updatePhone(openId,phone);
+       if(flag){
+           return ResponseEntity.ok(phone);
+       }
+       else{
+           return new ResponseEntity(phone,HttpStatus.BAD_REQUEST);
+       }
     }
 }

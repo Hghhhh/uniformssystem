@@ -1,29 +1,20 @@
 package com.yidong.model;
 
-import java.util.Date;
+import java.util.List;
 
+/**
+ * @author hgh
+ */
 public class Goods {
-    private Integer id;
+    private Integer goodsId;
 
     private String name;
 
-    private Float integral;
-
-    private Date createtime;
-
     private String detail;
 
-    private Integer state;
+    private List<String> pictures;
 
-    private Integer batch;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private List<Price> priceList;
 
     public String getName() {
         return name;
@@ -33,20 +24,13 @@ public class Goods {
         this.name = name == null ? null : name.trim();
     }
 
-    public Float getIntegral() {
-        return integral;
+
+    public List<String> getPictures() {
+        return pictures;
     }
 
-    public void setIntegral(Float integral) {
-        this.integral = integral;
-    }
-
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setPictures(List<String> pictures) {
+        this.pictures = pictures;
     }
 
     public String getDetail() {
@@ -54,22 +38,22 @@ public class Goods {
     }
 
     public void setDetail(String detail) {
-        this.detail = detail == null ? null : detail.trim();
+        this.detail = detail;
     }
 
-    public Integer getState() {
-        return state;
+    public List<Price> getPriceList() {
+        return priceList;
     }
 
-    public void setState(Integer state) {
-        this.state = state;
+    public void setPriceList(List<Price> priceList) {
+        this.priceList = priceList;
     }
 
-    public Integer getBatch() {
-        return batch;
+    public Integer getGoodsId() {
+        return goodsId;
     }
 
-    public void setBatch(Integer batch) {
-        this.batch = batch;
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
     }
 }

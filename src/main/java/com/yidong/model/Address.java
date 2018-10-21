@@ -1,7 +1,11 @@
 package com.yidong.model;
 
 public class Address {
+    private String openId;
+
     private Integer id;
+
+    private String detailAddress;
 
     private String name;
 
@@ -9,15 +13,8 @@ public class Address {
 
     private String phone;
 
-    private Integer state;
+    private int state;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -47,7 +44,32 @@ public class Address {
         return state;
     }
 
-    public void setState(Integer state) {
+    public void setState(int state) {
         this.state = state;
+    }
+
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

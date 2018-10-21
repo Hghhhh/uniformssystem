@@ -1,9 +1,16 @@
 package com.yidong.mapper;
 
+import java.util.Map;
 import com.yidong.model.Shoppingcar;
 
-public interface ShoppingcarMapper {
-    int insert(Shoppingcar record);
+import java.util.List;
 
-    int insertSelective(Shoppingcar record);
+public interface ShoppingcarMapper {
+    List<Shoppingcar> selectShoppingcar(String openId);
+
+    int updateShoppingcarBuyNum(Map map);
+
+    int updateShoppingcarState(Map map);
+
+    int deleteShoppingcarGoods(int id);
 }

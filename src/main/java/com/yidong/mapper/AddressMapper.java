@@ -1,5 +1,7 @@
 package com.yidong.mapper;
 
+import java.util.List;
+import java.util.Map;
 import com.yidong.model.Address;
 
 public interface AddressMapper {
@@ -7,11 +9,15 @@ public interface AddressMapper {
 
     int insert(Address record);
 
-    int insertSelective(Address record);
+    List<Address> selectByPrimaryKey(String userId);
 
-    Address selectByPrimaryKey(Integer id);
+    Address selectByAddressId(int addressId);
 
-    int updateByPrimaryKeySelective(Address record);
+    Address selectDefaultAddress(String userId);
 
     int updateByPrimaryKey(Address record);
+
+    int updateStateByPrimaryKey(Map map);
+
+    int insertUserAddress(Map map);
 }

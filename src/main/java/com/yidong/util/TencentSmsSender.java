@@ -10,21 +10,22 @@ import java.util.Random;
 public class TencentSmsSender {
 
     // 短信应用SDK AppID
-    private static final int appid = 1400122024; // 1400开头
+    private static final int APPID = 1400122024;
 
     // 短信应用SDK AppKey
-    private static final  String appkey = "86dbf88cc0abd417897ea9987eb9cb8f";
+    private static final  String APPKEY = "86dbf88cc0abd417897ea9987eb9cb8f";
 
     // 签名
-    private static final  String smsSign = "东兴隆冻品会";
+    private static final  String SMSSIGN = "东兴隆冻品会";
 
-    private static final int templateId = 171182;
+    private static final int TEMPLATEID = 171182;
     public static String sendMessage(String  phoneNumber){
         try {
             String[] params = {""};
             params[0] = randomNum();
-            SmsSingleSender ssender = new SmsSingleSender(appid, appkey);
-            SmsSingleSenderResult result = ssender.sendWithParam("86",phoneNumber,templateId,params,smsSign,"",""); // 签名参数未提供或者为空时，会使用默认签名发送短信
+            SmsSingleSender ssender = new SmsSingleSender(APPID, APPKEY);
+            // 签名参数未提供或者为空时，会使用默认签名发送短信
+            SmsSingleSenderResult result = ssender.sendWithParam("86",phoneNumber,TEMPLATEID,params,SMSSIGN,"","");
             return params[0];
         } catch (HTTPException e) {
             // HTTP响应码错误

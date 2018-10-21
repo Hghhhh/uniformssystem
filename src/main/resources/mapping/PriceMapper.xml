@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yidong.mapper.PriceMapper" >
+    <resultMap id="PriceMap" type="Price" >
+        <id column="id" property="priceId" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="INTEGER" />
+        <result column="num" property="num" jdbcType="INTEGER" />
+        <collection property="models" javaType="ArrayList" ofType="java.lang.String"
+                    column="id" select="selectModel"></collection>
+    </resultMap>
+    <resultMap id="PriceMapForVip" type="Price" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="price" property="tradePrice" jdbcType="INTEGER" />
+        <result column="num" property="num" jdbcType="INTEGER" />
+        <collection property="models" javaType="ArrayList" ofType="Model"
+                    column="id" select="selectModel"></collection>
+    </resultMap>
+    <resultMap id="ModelMap" type="Model" >
+        <result column="name" property="smallModelName" jdbcType="INTEGER" />
+        <association property="bigModelName" column="bigModelId" select="selectBigModelName">
+        </association>
+    </resultMap>
+    <select id="selectPrice" resultMap="PriceMap">
+        select * from tb_goods_price where goodsId=#{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectPricePrice" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select price from tb_goods_price where id=#{priceId,jdbcType=INTEGER}
+    </select>
+    <select id="selectPriceForVip" resultMap="PriceMapForVip">
+        select * from tb_goods_price where goodsId=#{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectModel"  resultMap="ModelMap">
+        SELECT name,bigModelId from tb_small_model where id in (
+          SELECT smallModelId as id from tb_price_model where priceId=#{id}
+        )
+    </select>
+    <select id="selectBigModelName" resultType="java.lang.String">
+        SELECT modelName as bigModelName from tb_big_model where id=#{bigModelId}
+    </select>
+</mapper>

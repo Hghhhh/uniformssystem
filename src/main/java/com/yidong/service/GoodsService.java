@@ -1,18 +1,13 @@
-package com.yidong.mapper;
+package com.yidong.service;
 
 import com.yidong.model.Goods;
-import com.yidong.model.ShoppingcarGoods;
 import com.yidong.model.VipGoods;
 
 import java.util.List;
+import java.util.Map;
 
-public interface GoodsMapper {
-
+public interface GoodsService {
     List<Goods> selectGoods();
-
     List<VipGoods> selectVipGoods(int goodsId);
-
-    ShoppingcarGoods selectShoppingcarGoods(String goodsId);
-
     Goods selectSingleGoods(int goodsId);
 }

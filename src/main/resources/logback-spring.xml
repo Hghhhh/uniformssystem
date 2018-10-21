@@ -70,7 +70,7 @@
     </appender>
 
     <root level="ERROR,INFO">
-      <appender-ref ref="console" />
+        <!-- <appender-ref ref="console" />-->
         <appender-ref ref="errorLogFile" />
         <appender-ref ref="infoLogFile" />
     </root>

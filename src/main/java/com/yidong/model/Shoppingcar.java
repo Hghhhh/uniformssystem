@@ -1,23 +1,62 @@
 package com.yidong.model;
 
+import java.util.List;
+
 public class Shoppingcar {
-    private Integer freeconditions;
+    private int shoppingcarId;
+    private ShoppingcarGoods shoppingcarGoods;
+    private int price;
+    private List<String> priceModels;
+    private int buyNum;
+    private int state;
 
-    private Integer free;
 
-    public Integer getFreeconditions() {
-        return freeconditions;
+
+    public List<String> getPriceModels() {
+        return priceModels;
     }
 
-    public void setFreeconditions(Integer freeconditions) {
-        this.freeconditions = freeconditions;
+    public void setPriceModels(List<String> priceModels) {
+        this.priceModels = priceModels;
     }
 
-    public Integer getFree() {
-        return free;
+    public int getBuyNum() {
+        return buyNum;
     }
 
-    public void setFree(Integer free) {
-        this.free = free;
+    public void setBuyNum(int buyNum) {
+        this.buyNum = buyNum;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getShoppingcarId() {
+        return shoppingcarId;
+    }
+
+    public void setShoppingcarId(int shoppingcarId) {
+        this.shoppingcarId = shoppingcarId;
+    }
+
+    public ShoppingcarGoods getShoppingcarGoods() {
+        return shoppingcarGoods;
+    }
+
+    public void setShoppingcarGoods(ShoppingcarGoods shoppingcarGoods) {
+        this.shoppingcarGoods = shoppingcarGoods;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

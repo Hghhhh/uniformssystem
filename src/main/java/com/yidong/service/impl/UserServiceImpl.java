@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isVip(String openId) {
-        return userMapper.isVip(openId)==null?false:true;
+    public String isVip(String openId) {
+        return userMapper.isVip(openId);
     }
 
     @Override
@@ -50,5 +50,13 @@ public class UserServiceImpl implements UserService {
         map.put("nickName",nickName);
         map.put("avatarUrl",avatarUrl);
         return userMapper.updateByPrimaryKey(map)==1?true:false;
+    }
+
+    @Override
+    public boolean updatePhone(String openId, String phone) {
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("openId",openId);
+        map.put("phone",phone);
+        return userMapper.updatePhone(map)==1?true:false;
     }
 }
