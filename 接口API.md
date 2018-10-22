@@ -353,7 +353,7 @@
 
 删除收货地址：
 
-**url:/ deleteAddress**
+**url:/deleteAddress**
 
 **参数：addressId**
 
@@ -365,9 +365,9 @@
 
 获取单个商品：
 
-**url:goods/singleGoods**
+**url:/goods/singleGoods**
 
-**参数：goodsId**
+**参数：goodsId,openId**
 
 返回：
 
@@ -557,6 +557,10 @@
 
 返回：成功返回状态码200，true；失败返回状态码400，false
 
+ 
+ 添加购物车商品：
+ **url:/insertShoppingcar**
+ **参数：openId,buyNum,priceId,goodsId**
  
 
 修改购物车的商品是否选中：
