@@ -341,7 +341,7 @@
 
 设置默认收货地址：
 
-**url: /upadteStateForAddress**
+**url: /updateStateForAddress**
 
 **参数：openId, addressId**
 
