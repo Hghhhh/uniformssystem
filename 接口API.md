@@ -460,9 +460,15 @@
 
 }
 
+增加商品评论：
  
+**url：/insertComments**
 
- 
+**参数：openId, content, star,  goodsId, orderformGoodsId** 
+
+//其中star 1表示好评，2表示中评，3表示差评，orderformGoodsId为订单中某行的id
+
+返回：评价成功返回true，200；失败返回false，400
 
 获取商品的评论:
 
@@ -706,24 +712,32 @@
 
 获取所有订单：
 
-url:/getOrderformByOpenId
+**url:/getOrderformByOpenId**
 
-参数：openId
+**参数：openId**
 
 获取一个订单：
 
-url:/getOrderformByOrderformId
+**url:/getOrderformByOrderformId**
 
-参数：orderformId
+**参数：orderformId**
 
 更改订单：
 
-url：/updateOrderform
+**url：/updateOrderform**
 
 参数：orderformId, //订单id
 
-   state, //订单状态0待支付，1待发货，2申请退款，3同意退款，4退款成功，5退款失败，6已发货，7已完成，8已关闭
+   state, //订单状态0待支付，1待发货，2申请退款，3同意退款，4退款成功，5退款失败，6已发货，7已完成，8已关闭（已失效）
     
    remarksWhenRefund  //申请退款理由
-   
+
 注意：上面的remarksWhenRefund只在申请退款的时候需要，其他时候不需要
+
+获取轮播图：
+
+**url：/getBanner**
+
+返回：[
+"123.img","123.img","31.img"
+]
