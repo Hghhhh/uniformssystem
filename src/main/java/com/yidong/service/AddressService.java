@@ -3,7 +3,6 @@ package com.yidong.service;
 import com.yidong.model.Address;
 
 import java.util.List;
-import java.util.Map;
 
 public interface AddressService {
     boolean deleteByPrimaryKey(Integer id);

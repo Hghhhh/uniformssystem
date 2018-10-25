@@ -25,7 +25,17 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    public VipGoods selectSingleVipGoods(int goodsId) {
+        return goodsMapper.selectSingleVipGoods(goodsId);
+    }
+
+    @Override
     public Goods selectSingleGoods(int goodsId) {
         return goodsMapper.selectSingleGoods(goodsId);
+    }
+
+    @Override
+    public List<Goods> selecrGoodsByTypeId(int smallTypeId) {
+        return goodsMapper.selecrGoodsByTypeId(smallTypeId);
     }
 }

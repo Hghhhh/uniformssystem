@@ -13,4 +13,10 @@ public interface ShoppingcarMapper {
     int updateShoppingcarState(Map map);
 
     int deleteShoppingcarGoods(int id);
+
+    int insertShoppingcarGoods(Map map);
+
+    int selectCarId(String openId);
+
+    int updateShoppingcarBuyNumWhenInsert(Map map);
 }

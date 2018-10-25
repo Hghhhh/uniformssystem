@@ -1,6 +1,6 @@
 package com.yidong.model;
 
-public class ShoppingcarGoods {
+public class GoodsInfo {
     private int goodsId;
     private String goodsName;
     private String goodsPicture;

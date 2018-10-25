@@ -11,12 +11,10 @@ public class OrderFormId {
 
     /**
      * 生成订单号
-     *
-     * @param account 订单号前缀
      * @return
      */
-    public static String gens(String account) {
-        String orderNo = sdf.format(new Date()) + (1 + (int) (Math.random() * 10000)) + account;
+    public static String gens() {
+        String orderNo = sdf.format(new Date()) + (1 + (int) (Math.random() * 10000));
         return orderNo;
     }
 

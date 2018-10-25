@@ -1,248 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yidong.mapper.OrderformMapper" >
-  <resultMap id="BaseResultMap" type="com.yidong.model.Orderform" >
-    <id column="id" property="id" jdbcType="VARCHAR" />
-    <result column="sumFirst" property="sumfirst" jdbcType="INTEGER" />
-    <result column="sumFinal" property="sumfinal" jdbcType="INTEGER" />
-    <result column="transportFee" property="transportfee" jdbcType="INTEGER" />
-    <result column="userId" property="userid" jdbcType="VARCHAR" />
+  <resultMap id="OrderformMap" type="Orderform" >
+    <id column="id" property="orderformId" jdbcType="VARCHAR" />
+    <result column="sumFirst" property="sumFirst" jdbcType="INTEGER" />
+    <result column="sumFinal" property="sumFinal" jdbcType="INTEGER" />
+    <result column="transportFee" property="transportFee" jdbcType="INTEGER" />
+    <result column="userId" property="openId" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="remarksWhenOrder" property="remarkswhenorder" jdbcType="VARCHAR" />
-    <result column="remarksWhenRefund" property="remarkswhenrefund" jdbcType="VARCHAR" />
-    <result column="remarksServiceReturn" property="remarksservicereturn" jdbcType="VARCHAR" />
-    <result column="delivery" property="delivery" jdbcType="INTEGER" />
-    <result column="expressNumber" property="expressnumber" jdbcType="VARCHAR" />
-    <result column="expressCompany" property="expresscompany" jdbcType="VARCHAR" />
-    <result column="gitfId" property="gitfid" jdbcType="INTEGER" />
-    <result column="giftNum" property="giftnum" jdbcType="INTEGER" />
+    <result column="remarksWhenOrder" property="remarksWhenOrder" jdbcType="VARCHAR" />
+    <result column="remarksWhenRefund" property="remarksWhenRefund" jdbcType="VARCHAR" />
+    <result column="remarksServiceReturn" property="remarksServiceReturn" jdbcType="VARCHAR" />
+    <result column="giftId" property="giftId" jdbcType="INTEGER" />
+    <result column="giftNum" property="giftNum" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="INTEGER" />
-    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <collection property="orderformGoods" javaType="ArrayList" ofType="OrderformGoods" column="id"
+                select="selectOrderformGoods">
+    </collection>
+  </resultMap>
+  <resultMap id="OrderformGoodsMap" type="OrderformGoods">
+    <result column="goodsId" property="goodsId"></result>
+    <result column="goodsName" property="goodsName"></result>
+    <result column="goodsPicture" property="goodsPicture"></result>
+    <result column="goodsPrice" property="goodsPrice"></result>
+    <result column="priceId" property="priceId"></result>
+    <result column="buyNum" property="buyNum"></result>
+    <collection property="priceModels" javaType="ArrayList" ofType="java.lang.String" column="id"
+                select="selectOrderformModel">
+    </collection>
   </resultMap>
   <sql id="Base_Column_List" >
     id, sumFirst, sumFinal, transportFee, userId, name, address, phone, remarksWhenOrder, 
-    remarksWhenRefund, remarksServiceReturn, delivery, expressNumber, expressCompany, 
-    gitfId, giftNum, state, createTime
+    remarksWhenRefund, remarksServiceReturn,
+    giftId, giftNum, state, createTime
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_orderform
-    where id = #{id,jdbcType=VARCHAR}
+
+  <select id="selectOrderform" resultMap="OrderformMap">
+    SELECT * from tb_orderform where userId=#{opeId}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from tb_orderform
-    where id = #{id,jdbcType=VARCHAR}
-  </delete>
-  <insert id="insert" parameterType="Orderform" >
-    insert into tb_orderform (id, sumFirst, sumFinal, 
-      transportFee, userId, name, 
-      address, phone, remarksWhenOrder, 
-      remarksWhenRefund, remarksServiceReturn, 
-      delivery, expressNumber, expressCompany, 
-      gitfId, giftNum, state, 
-      createTime)
-    values (#{id,jdbcType=VARCHAR}, #{sumfirst,jdbcType=INTEGER}, #{sumfinal,jdbcType=INTEGER}, 
-      #{transportfee,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
-      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{remarkswhenorder,jdbcType=VARCHAR}, 
-      #{remarkswhenrefund,jdbcType=VARCHAR}, #{remarksservicereturn,jdbcType=VARCHAR}, 
-      #{delivery,jdbcType=INTEGER}, #{expressnumber,jdbcType=VARCHAR}, #{expresscompany,jdbcType=VARCHAR}, 
-      #{gitfid,jdbcType=INTEGER}, #{giftnum,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
-      #{createtime,jdbcType=TIMESTAMP})
+  <select id="selectOrderformById" resultMap="OrderformMap">
+    SELECT * from tb_orderform where id=#{orderformId}
+  </select>
+  <select id="selectOrderformGoods" resultMap="OrderformGoodsMap">
+    SELECT * from tb_orderform_goods where orderformId=#{id}
+  </select>
+  <select id="selectOrderformModel" resultType="java.lang.String">
+    SELECT modelName from tb_orderform_model where orderformGoodsId=#{id}
+  </select>
+  <select id="selectGoodsIdAndBuyNum" resultType="GoodsIdAndBuyNum" >
+    SELECT goodsId,buyNum,integral from tb_orderform_goods,tb_goods where orderformId=#{orderformId} and tb_goods.id=goodsId
+  </select>
+  <insert id="insertOrderform" parameterType="Orderform">
+    insert into tb_orderform values (#{orderformId},#{sumFirst},#{sumFinal},#{transportFee},#{openId},#{name},#{address},
+    #{phone},#{remarksWhenOrder},#{remarksWhenRefund},#{remarksServiceReturn},#{giftId},#{giftNum},0,now());
   </insert>
-  <insert id="insertSelective" parameterType="Orderform" >
-    insert into tb_orderform
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="sumfirst != null" >
-        sumFirst,
-      </if>
-      <if test="sumfinal != null" >
-        sumFinal,
-      </if>
-      <if test="transportfee != null" >
-        transportFee,
-      </if>
-      <if test="userid != null" >
-        userId,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="address != null" >
-        address,
-      </if>
-      <if test="phone != null" >
-        phone,
-      </if>
-      <if test="remarkswhenorder != null" >
-        remarksWhenOrder,
-      </if>
-      <if test="remarkswhenrefund != null" >
-        remarksWhenRefund,
-      </if>
-      <if test="remarksservicereturn != null" >
-        remarksServiceReturn,
-      </if>
-      <if test="delivery != null" >
-        delivery,
-      </if>
-      <if test="expressnumber != null" >
-        expressNumber,
-      </if>
-      <if test="expresscompany != null" >
-        expressCompany,
-      </if>
-      <if test="gitfid != null" >
-        gitfId,
-      </if>
-      <if test="giftnum != null" >
-        giftNum,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-      <if test="createtime != null" >
-        createTime,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="sumfirst != null" >
-        #{sumfirst,jdbcType=INTEGER},
-      </if>
-      <if test="sumfinal != null" >
-        #{sumfinal,jdbcType=INTEGER},
-      </if>
-      <if test="transportfee != null" >
-        #{transportfee,jdbcType=INTEGER},
-      </if>
-      <if test="userid != null" >
-        #{userid,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="remarkswhenorder != null" >
-        #{remarkswhenorder,jdbcType=VARCHAR},
-      </if>
-      <if test="remarkswhenrefund != null" >
-        #{remarkswhenrefund,jdbcType=VARCHAR},
-      </if>
-      <if test="remarksservicereturn != null" >
-        #{remarksservicereturn,jdbcType=VARCHAR},
-      </if>
-      <if test="delivery != null" >
-        #{delivery,jdbcType=INTEGER},
-      </if>
-      <if test="expressnumber != null" >
-        #{expressnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="expresscompany != null" >
-        #{expresscompany,jdbcType=VARCHAR},
-      </if>
-      <if test="gitfid != null" >
-        #{gitfid,jdbcType=INTEGER},
-      </if>
-      <if test="giftnum != null" >
-        #{giftnum,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
+  <insert id="insertOrderformGoods" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    insert into tb_orderform_goods
+    (orderformId,goodsId,goodsName,goodsPicture,goodsPrice, buyNum,priceId)
+    values
+    <foreach collection ="list" item="orderformGoods" index= "index" separator =",">
+      (
+      #{orderformGoods.orderformId},
+      #{orderformGoods.goodsId},
+      #{orderformGoods.goodsName},
+      #{orderformGoods.goodsPicture},
+      #{orderformGoods.goodsPrice},
+      #{orderformGoods.buyNum},
+      #{orderformGoods.priceId}
+      );
+    </foreach >
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="Orderform" >
+  <insert id="insertOrderformGoodsModel" parameterType="map" >
+    insert into tb_orderform_model values
+    <foreach collection ="models" item="model" index= "index" separator =",">
+      (
+       #{id},
+       #{model}
+      )
+    </foreach>
+  </insert>
+  <update id="updateOrderform" parameterType="map">
     update tb_orderform
-    <set >
-      <if test="sumfirst != null" >
-        sumFirst = #{sumfirst,jdbcType=INTEGER},
+    <trim prefix="set" suffixOverrides=",">
+      <if test="state!=null">
+        state=#{state},
       </if>
-      <if test="sumfinal != null" >
-        sumFinal = #{sumfinal,jdbcType=INTEGER},
+      <if test="remarksWhenRefund!=null">
+        remarksWhenRefund=#{remarksWhenRefund},
       </if>
-      <if test="transportfee != null" >
-        transportFee = #{transportfee,jdbcType=INTEGER},
-      </if>
-      <if test="userid != null" >
-        userId = #{userid,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="address != null" >
-        address = #{address,jdbcType=VARCHAR},
-      </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="remarkswhenorder != null" >
-        remarksWhenOrder = #{remarkswhenorder,jdbcType=VARCHAR},
-      </if>
-      <if test="remarkswhenrefund != null" >
-        remarksWhenRefund = #{remarkswhenrefund,jdbcType=VARCHAR},
-      </if>
-      <if test="remarksservicereturn != null" >
-        remarksServiceReturn = #{remarksservicereturn,jdbcType=VARCHAR},
-      </if>
-      <if test="delivery != null" >
-        delivery = #{delivery,jdbcType=INTEGER},
-      </if>
-      <if test="expressnumber != null" >
-        expressNumber = #{expressnumber,jdbcType=VARCHAR},
-      </if>
-      <if test="expresscompany != null" >
-        expressCompany = #{expresscompany,jdbcType=VARCHAR},
-      </if>
-      <if test="gitfid != null" >
-        gitfId = #{gitfid,jdbcType=INTEGER},
-      </if>
-      <if test="giftnum != null" >
-        giftNum = #{giftnum,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
-      </if>
-      <if test="createtime != null" >
-        createTime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=VARCHAR}
+    </trim>
+    where id=#{orderformId}
   </update>
-  <update id="updateByPrimaryKey" parameterType="Orderform" >
-    update tb_orderform
-    set sumFirst = #{sumfirst,jdbcType=INTEGER},
-      sumFinal = #{sumfinal,jdbcType=INTEGER},
-      transportFee = #{transportfee,jdbcType=INTEGER},
-      userId = #{userid,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
-      address = #{address,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      remarksWhenOrder = #{remarkswhenorder,jdbcType=VARCHAR},
-      remarksWhenRefund = #{remarkswhenrefund,jdbcType=VARCHAR},
-      remarksServiceReturn = #{remarksservicereturn,jdbcType=VARCHAR},
-      delivery = #{delivery,jdbcType=INTEGER},
-      expressNumber = #{expressnumber,jdbcType=VARCHAR},
-      expressCompany = #{expresscompany,jdbcType=VARCHAR},
-      gitfId = #{gitfid,jdbcType=INTEGER},
-      giftNum = #{giftnum,jdbcType=INTEGER},
-      state = #{state,jdbcType=INTEGER},
-      createTime = #{createtime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
+  
+  <update id="updateIntegral" parameterType="java.util.List">
+    <foreach collection ="list" item="goodsIdAndBuyNum" index= "index" separator =";" >
+      update tb_vip set integral = integral + (#{goodsIdAndBuyNum.buyNum}*#{goodsIdAndBuyNum.integral}) where goodsId=#{goodsIdAndBuyNum.goodsId}
+    </foreach>
   </update>
 </mapper>

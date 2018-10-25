@@ -1,6 +1,9 @@
 package com.yidong.mapper;
 
 import com.yidong.model.Price;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Map;
 
 public interface PriceMapper {
 
@@ -9,4 +12,8 @@ public interface PriceMapper {
     int selectPricePrice(int priceId);
 
     Price selectPriceForVip(int id);
+
+    int reduceNum(@Param("buyNum")int buyNum, @Param("priceId")int priceId);
+
+    int returnNum(@Param("buyNum")int buyNum, @Param("priceId")int priceId);
 }

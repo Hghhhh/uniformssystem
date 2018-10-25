@@ -11,30 +11,57 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RequestMapping("/goods")
 @RestController
 public class GoodsController {
-
     @Autowired
     private GoodsService goodsService;
 
     @Autowired
     private UserService userService;
 
+
+    @RequestMapping("/goods")
     public List getGoods(@RequestParam  String openId){
         String vipGoodId = userService.isVip(openId);
         if(vipGoodId!=null){
-            return goodsService.selectVipGoods(Integer.parseInt(vipGoodId));
+            return setMaxAndMinPriceForGoods(goodsService.selectVipGoods(Integer.parseInt(vipGoodId)));
         }
         else{
-            return goodsService.selectGoods();
+            return setMaxAndMinPriceForGoods(goodsService.selectGoods());
         }
     }
 
-    @RequestMapping(value = "singleGoods")
-    public Goods getSingleGoods(@RequestParam int goodsId){
-       return goodsService.selectSingleGoods(goodsId);
+    /**
+     * 为商品列表设置最大价格和最小价格
+     * @param list
+     * @return list
+     */
+    public List setMaxAndMinPriceForGoods(List list){
+        for(Object goods : list){
+            Goods g = (Goods) goods;
+            g.setMaxAndMinPrice();
+        }
+        return list;
     }
 
+    @RequestMapping(value = "/goods/singleGoods")
+    public Goods getSingleGoods(int goodsId,@RequestParam String openId){
+        String vipGoodId = userService.isVip(openId);
+        if(vipGoodId!=null){
+            Goods goods  = goodsService.selectSingleVipGoods(Integer.parseInt(vipGoodId));
+            goods.setMaxAndMinPrice();
+            return goods;
+        }
+        else{
+            Goods goods = goodsService.selectSingleGoods(goodsId);
+            goods.setMaxAndMinPrice();
+            return goods;
+        }
+    }
+
+    @RequestMapping(value = "/goods/typeGoods")
+    public List<Goods> selecrGoodsByTypeId(@RequestParam  int typeId) {
+        return goodsService.selecrGoodsByTypeId(typeId);
+    }
 
 }

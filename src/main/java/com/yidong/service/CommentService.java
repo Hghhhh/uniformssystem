@@ -8,5 +8,7 @@ import java.util.List;
 public interface CommentService {
 
     List<Comment> selectCommentByGoodsId(int goodsId);
+
+    boolean insertComment(String openId,String content,int star,int goodsId,int orderformGoodsId);
 }
 

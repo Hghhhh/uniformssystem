@@ -1,8 +1,9 @@
 package com.yidong.mapper;
 
+import com.yidong.model.Address;
+
 import java.util.List;
 import java.util.Map;
-import com.yidong.model.Address;
 
 public interface AddressMapper {
     int deleteByPrimaryKey(Integer id);

@@ -5,9 +5,10 @@
     <id column="id" property="shoppingcarId"></id>
     <result column="buyNum" property="buyNum"></result>
     <result column="state" property="state"></result>
+    <result column="priceId" property="priceId" ></result>
     <association property="price" column="priceId" select="com.yidong.mapper.PriceMapper.selectPricePrice">
     </association>
-    <association property="shoppingcarGoods" column="goodsId" select="com.yidong.mapper.GoodsMapper.selectShoppingcarGoods"></association>
+    <association property="shoppingcarGoods" column="goodsId" select="com.yidong.mapper.GoodsMapper.selectGoodsInfo"></association>
     <collection property="priceModels" column="priceId" select="selectPriceModel"></collection>
   </resultMap>
 
@@ -22,6 +23,9 @@
       select id from tb_shoppingcar where userId=#{openId}
     )
   </select>
+  <update id="updateShoppingcarBuyNumWhenInsert" parameterType="map">
+    UPDATE tb_shoppingcar_goods set buyNum=#{buyNum}+buyNum where carId=#{carId} and goodsId=#{goodsId} and priceId=#{priceId}
+  </update>
   <update id="updateShoppingcarBuyNum" parameterType="map">
     UPDATE tb_shoppingcar_goods set buyNum=#{buyNum} where id=#{id}
   </update>
@@ -31,4 +35,11 @@
   <delete id="deleteShoppingcarGoods">
     DELETE from tb_shoppingcar_goods where id=#{id}
   </delete>
+  <insert id="insertShoppingcarGoods" parameterType="map">
+    insert into tb_shoppingcar_goods (carId,goodsId,buyNum,priceId,state)
+    values (#{carId},#{goodsId},#{buyNum},#{priceId},0);
+  </insert>
+  <select id="selectCarId" resultType="java.lang.Integer">
+    SELECT id from tb_shoppingcar where userId=#{openId}
+  </select>
 </mapper>

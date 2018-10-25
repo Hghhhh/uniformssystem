@@ -2,6 +2,10 @@ package com.yidong.model;
 
 import java.util.List;
 
+/**
+ * @author hgh
+ *
+ */
 public class Price {
     private int priceId;
 

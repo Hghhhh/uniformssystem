@@ -1,17 +1,11 @@
 package com.yidong.model;
 
-import java.util.Date;
+import java.util.List;
 
 public class Orderform {
-    private String id;
+    private String orderformId;
 
-    private Integer sumfirst;
-
-    private Integer sumfinal;
-
-    private Integer transportfee;
-
-    private String userid;
+    private String openId;
 
     private String name;
 
@@ -19,64 +13,49 @@ public class Orderform {
 
     private String phone;
 
-    private String remarkswhenorder;
+    private List<OrderformGoods> orderformGoods;
 
-    private String remarkswhenrefund;
+    private Integer giftId;
 
-    private String remarksservicereturn;
+    private Integer giftNum;
 
-    private Integer delivery;
+    private Integer transportFee;
 
-    private String expressnumber;
+    private Integer sumFirst;
 
-    private String expresscompany;
-
-    private Integer gitfid;
-
-    private Integer giftnum;
+    private Integer sumFinal;
 
     private Integer state;
 
-    private Date createtime;
+    private String createTime;
 
-    public String getId() {
-        return id;
+    private String remarksWhenOrder;
+
+    private String remarksWhenRefund;
+
+    private String remarksServiceReturn;
+
+
+    public void setOrderformIdForOrderformGoods(){
+        for(OrderformGoods og:this.orderformGoods){
+            og.setOrderformId(this.orderformId);
+        }
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public String getOrderformId() {
+        return orderformId;
     }
 
-    public Integer getSumfirst() {
-        return sumfirst;
+    public void setOrderformId(String orderformId) {
+        this.orderformId = orderformId;
     }
 
-    public void setSumfirst(Integer sumfirst) {
-        this.sumfirst = sumfirst;
+    public String getOpenId() {
+        return openId;
     }
 
-    public Integer getSumfinal() {
-        return sumfinal;
-    }
-
-    public void setSumfinal(Integer sumfinal) {
-        this.sumfinal = sumfinal;
-    }
-
-    public Integer getTransportfee() {
-        return transportfee;
-    }
-
-    public void setTransportfee(Integer transportfee) {
-        this.transportfee = transportfee;
-    }
-
-    public String getUserid() {
-        return userid;
-    }
-
-    public void setUserid(String userid) {
-        this.userid = userid == null ? null : userid.trim();
+    public void setOpenId(String openId) {
+        this.openId = openId;
     }
 
     public String getName() {
@@ -84,7 +63,7 @@ public class Orderform {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
     }
 
     public String getAddress() {
@@ -92,7 +71,7 @@ public class Orderform {
     }
 
     public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+        this.address = address;
     }
 
     public String getPhone() {
@@ -100,71 +79,47 @@ public class Orderform {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+        this.phone = phone;
     }
 
-    public String getRemarkswhenorder() {
-        return remarkswhenorder;
+    public List<OrderformGoods> getOrderformGoods() {
+        return orderformGoods;
     }
 
-    public void setRemarkswhenorder(String remarkswhenorder) {
-        this.remarkswhenorder = remarkswhenorder == null ? null : remarkswhenorder.trim();
+    public void setOrderformGoods(List<OrderformGoods> orderformGoods) {
+        this.orderformGoods = orderformGoods;
     }
 
-    public String getRemarkswhenrefund() {
-        return remarkswhenrefund;
+    public Integer getGiftId() {
+        return giftId;
     }
 
-    public void setRemarkswhenrefund(String remarkswhenrefund) {
-        this.remarkswhenrefund = remarkswhenrefund == null ? null : remarkswhenrefund.trim();
+    public void setGiftId(Integer giftId) {
+        this.giftId = giftId;
     }
 
-    public String getRemarksservicereturn() {
-        return remarksservicereturn;
+    public Integer getGiftNum() {
+        return giftNum;
     }
 
-    public void setRemarksservicereturn(String remarksservicereturn) {
-        this.remarksservicereturn = remarksservicereturn == null ? null : remarksservicereturn.trim();
+    public void setGiftNum(Integer giftNum) {
+        this.giftNum = giftNum;
     }
 
-    public Integer getDelivery() {
-        return delivery;
+    public Integer getSumFirst() {
+        return sumFirst;
     }
 
-    public void setDelivery(Integer delivery) {
-        this.delivery = delivery;
+    public void setSumFirst(Integer sumFirst) {
+        this.sumFirst = sumFirst;
     }
 
-    public String getExpressnumber() {
-        return expressnumber;
+    public Integer getSumFinal() {
+        return sumFinal;
     }
 
-    public void setExpressnumber(String expressnumber) {
-        this.expressnumber = expressnumber == null ? null : expressnumber.trim();
-    }
-
-    public String getExpresscompany() {
-        return expresscompany;
-    }
-
-    public void setExpresscompany(String expresscompany) {
-        this.expresscompany = expresscompany == null ? null : expresscompany.trim();
-    }
-
-    public Integer getGitfid() {
-        return gitfid;
-    }
-
-    public void setGitfid(Integer gitfid) {
-        this.gitfid = gitfid;
-    }
-
-    public Integer getGiftnum() {
-        return giftnum;
-    }
-
-    public void setGiftnum(Integer giftnum) {
-        this.giftnum = giftnum;
+    public void setSumFinal(Integer sumFinal) {
+        this.sumFinal = sumFinal;
     }
 
     public Integer getState() {
@@ -175,11 +130,43 @@ public class Orderform {
         this.state = state;
     }
 
-    public Date getCreatetime() {
-        return createtime;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime.substring(0,createTime.length()-2);
+    }
+
+    public String getRemarksServiceReturn() {
+        return remarksServiceReturn;
+    }
+
+    public void setRemarksServiceReturn(String remarksServiceReturn) {
+        this.remarksServiceReturn = remarksServiceReturn;
+    }
+
+    public Integer getTransportFee() {
+        return transportFee;
+    }
+
+    public void setTransportFee(Integer transportFee) {
+        this.transportFee = transportFee;
+    }
+
+    public String getRemarksWhenOrder() {
+        return remarksWhenOrder;
+    }
+
+    public void setRemarksWhenOrder(String remarksWhenOrder) {
+        this.remarksWhenOrder = remarksWhenOrder;
+    }
+
+    public String getRemarksWhenRefund() {
+        return remarksWhenRefund;
+    }
+
+    public void setRemarksWhenRefund(String remarksWhenRefund) {
+        this.remarksWhenRefund = remarksWhenRefund;
     }
 }

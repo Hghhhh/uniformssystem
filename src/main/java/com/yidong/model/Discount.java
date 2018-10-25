@@ -3,22 +3,23 @@ package com.yidong.model;
 import java.util.Date;
 
 public class Discount {
-    private Integer discountcondition;
+    private Integer discountCondition;
 
     private Integer reduce;
 
     private Float discount;
 
-    private Date start;
+    private String start;
 
-    private Date end;
+    private String end;
 
-    public Integer getDiscountcondition() {
-        return discountcondition;
+
+    public Integer getDiscountCondition() {
+        return discountCondition;
     }
 
-    public void setDiscountcondition(Integer discountcondition) {
-        this.discountcondition = discountcondition;
+    public void setDiscountCondition(Integer discountCondition) {
+        this.discountCondition = discountCondition;
     }
 
     public Integer getReduce() {
@@ -37,19 +38,19 @@ public class Discount {
         this.discount = discount;
     }
 
-    public Date getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setStart(String start) {
+        this.start = start.substring(0,start.length()-2);
     }
 
-    public Date getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setEnd(String end) {
+        this.end = end.substring(0,end.length()-2);
     }
 }

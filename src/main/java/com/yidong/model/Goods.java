@@ -6,6 +6,10 @@ import java.util.List;
  * @author hgh
  */
 public class Goods {
+    private int maxPrice;
+
+    private int minPrice;
+
     private Integer goodsId;
 
     private String name;
@@ -55,5 +59,39 @@ public class Goods {
 
     public void setGoodsId(Integer goodsId) {
         this.goodsId = goodsId;
+    }
+
+    public int getMaxPrice() {
+        return maxPrice;
+    }
+
+    public void setMaxPrice(int maxPrice) {
+        this.maxPrice = maxPrice;
+    }
+
+    public int getMinPrice() {
+        return minPrice;
+    }
+
+    public void setMinPrice(int minPrice) {
+        this.minPrice = minPrice;
+    }
+
+
+    public void setMaxAndMinPrice(){
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        int p;
+        for(Price price : this.getPriceList()){
+            p = price.getPrice();
+            if(max<p){
+                max=p;
+            }
+            if(min>p){
+                min=p;
+            }
+        }
+        this.maxPrice=max;
+        this.minPrice=min;
     }
 }

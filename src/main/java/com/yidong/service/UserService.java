@@ -23,4 +23,7 @@ public interface UserService {
     boolean updateByPrimaryKey(String openId,String nickName,String avatarUrl);
 
     boolean updatePhone(String openId,String phone);
+
+
+    String selectIntegral(String openId);
 }

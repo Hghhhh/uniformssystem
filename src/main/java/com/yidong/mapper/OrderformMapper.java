@@ -1,17 +1,26 @@
 package com.yidong.mapper;
 
+import com.yidong.model.GoodsIdAndBuyNum;
 import com.yidong.model.Orderform;
+import com.yidong.model.OrderformGoods;
+import org.springframework.core.annotation.Order;
 
+import java.util.List;
+import java.util.Map;
 public interface OrderformMapper {
-    int deleteByPrimaryKey(String id);
+    int insertOrderform(Orderform orderform);
 
-    int insert(Orderform record);
+    int insertOrderformGoods(List<OrderformGoods> orderformGoodsList);
 
-    int insertSelective(Orderform record);
+    int insertOrderformGoodsModel(Map map);
 
-    Orderform selectByPrimaryKey(String id);
+    List<Orderform> selectOrderform(String openId);
 
-    int updateByPrimaryKeySelective(Orderform record);
+    Orderform selectOrderformById(String orderformId);
 
-    int updateByPrimaryKey(Orderform record);
+    int updateOrderform(Map map);
+
+    List<GoodsIdAndBuyNum> selectGoodsIdAndBuyNum(String orderformId);
+
+    int updateIntegral(List<GoodsIdAndBuyNum> goodsIdAndBuyNums);
 }

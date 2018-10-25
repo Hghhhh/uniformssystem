@@ -40,5 +40,27 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
         return shoppingcarMapper.deleteShoppingcarGoods(id)==1?true:false;
     }
 
+    @Override
+    public boolean insertShoppingcarGoods(int carId, int buyNum, int priceId, int goodsId) {
+        Map map = new HashMap();
+        map.put("carId",carId);
+        map.put("buyNum",buyNum);
+        map.put("priceId",priceId);
+        map.put("goodsId",goodsId);
+        int count = shoppingcarMapper.updateShoppingcarBuyNumWhenInsert(map);
+        //如果购物车已有该商品，合并buyNum，否则再添加商品
+        if(count>0){
+            return true;
+        }
+        else{
+            return shoppingcarMapper.insertShoppingcarGoods(map)==1?true:false;
+        }
+    }
+
+    @Override
+    public int selectCarId(String openId) {
+        return shoppingcarMapper.selectCarId(openId);
+    }
+
 
 }

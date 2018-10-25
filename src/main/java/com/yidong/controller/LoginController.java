@@ -87,6 +87,7 @@ public class LoginController {
             //连接微信接口失败504状态码
             return new ResponseEntity(null, HttpStatus.GATEWAY_TIMEOUT);
         }
+        user.setIntegral(userService.selectIntegral(openId));
         return new ResponseEntity(user, HttpStatus.OK);
     }
 

@@ -54,4 +54,15 @@ public class ShoppingcarController {
         }
     }
 
+
+    @RequestMapping(value = "/insertShoppingcar")
+    public ResponseEntity<Boolean> insertShoppingcar(@RequestParam String openId,@RequestParam  int buyNum,@RequestParam int priceId,@RequestParam int goodsId){
+            int carId = shoppingcarService.selectCarId(openId);
+        if(shoppingcarService.insertShoppingcarGoods(carId,buyNum,priceId,goodsId)){
+            return  ResponseEntity.ok(true);
+        }
+        else{
+            return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+        }
+    }
 }

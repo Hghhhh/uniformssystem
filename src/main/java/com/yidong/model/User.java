@@ -9,6 +9,8 @@ public class User {
 
     private String phone;
 
+    private Float integral;
+
     public String getOpenId() {
         return openId;
     }
@@ -25,4 +27,12 @@ public class User {
         this.phone = phone;
     }
 
+
+    public Float getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(String integral) {
+        this.integral = Float.valueOf(integral);
+    }
 }

@@ -20,4 +20,6 @@ public interface UserMapper {
     int updateByPrimaryKey(Map<String,String> map);
 
     int updatePhone(Map<String,String> map);
+
+    String selectIntegral(String openId);
 }

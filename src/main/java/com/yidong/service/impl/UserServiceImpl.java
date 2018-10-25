@@ -59,4 +59,16 @@ public class UserServiceImpl implements UserService {
         map.put("phone",phone);
         return userMapper.updatePhone(map)==1?true:false;
     }
+
+    @Override
+    public String selectIntegral(String openId) {
+       String integral = userMapper.selectIntegral(openId);
+       if(integral==null || "".equals(integral)){
+           integral="-1";
+           return integral;
+       }
+       else{
+           return integral;
+       }
+    }
 }

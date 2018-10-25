@@ -12,4 +12,9 @@ public interface ShoppingcarService {
     boolean updateShoppingcarState(int state,int id);
 
     boolean deleteShoppingcarGoods(int id);
+
+    boolean insertShoppingcarGoods(int carId,int buyNum,int priceId,int goodsId);
+
+    int selectCarId(String openId);
+
 }

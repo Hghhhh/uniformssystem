@@ -37,4 +37,10 @@
     <select id="selectBigModelName" resultType="java.lang.String">
         SELECT modelName as bigModelName from tb_big_model where id=#{bigModelId}
     </select>
+    <update id="reduceNum" >
+        update set num=num-#{buyNum} where id=#{priceId}
+    </update>
+    <update id="returnNum">
+        update set num=num+#{buyNum} where id=#{priceId}
+    </update>
 </mapper>

@@ -16,7 +16,7 @@ public class AddressController {
     @Autowired
     private AddressService addressService;
 
-    @RequestMapping(value = "/address" )
+    @RequestMapping(value = "/address")
     public List<Address> getAddress(@RequestParam  String openId){
         return addressService.selectByPrimaryKey(openId);
     }
@@ -30,8 +30,6 @@ public class AddressController {
     public Address getAddress(@RequestParam  int addressId){
         return addressService.selectByAddressId(addressId);
     }
-
-
 
     @RequestMapping(value = "/deleteAddress")
     public ResponseEntity delete(@RequestParam  int addressId){
@@ -55,7 +53,7 @@ public class AddressController {
     }
 
 
-    @RequestMapping(value="/upadteStateForAddress")
+    @RequestMapping(value="/updateStateForAddress")
     public ResponseEntity updateStateAddress(@RequestParam String openId,@RequestParam int addressId){
         if(addressService.updateStateByPrimaryKey(openId,addressId)){
             return  ResponseEntity.ok(null);
@@ -65,7 +63,7 @@ public class AddressController {
         }
     }
 
-    @RequestMapping(value="/upadteAddress")
+    @RequestMapping(value="/updateAddress")
     public ResponseEntity updateAddress(@RequestBody String address){
         Address myAddress = JsonUtil.parseJsonWithGson(address,Address.class);
         if(addressService.updateByPrimaryKey(myAddress)){
