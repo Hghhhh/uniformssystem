@@ -4,7 +4,7 @@
 
 **参数：code,nickName,avatarUrl**
 
-**返回：openId，phone**
+**返回：openId，phone，integral**  //如果不是vip用户integral为-1
 
 错误信息：
 
@@ -564,7 +564,6 @@
 返回：成功返回状态码200，true；失败返回状态码400，false
 
  
-
 修改购物车里商品购买数量：
 
 **url：/updateBuyNumForShoppingcar**
@@ -578,7 +577,7 @@
  **url:/insertShoppingcar**
  **参数：openId,buyNum,priceId,goodsId**
  
-
+ 
 修改购物车的商品是否选中：
 
 **url:/updateStateForShoppingcar**
@@ -636,6 +635,7 @@
    "num": 1  //赠送数量
 }
 
+注意：如果goodsId为0，则没有赠品，不用显示
 
 获取运费：
 **url：/getTransportFree**
@@ -649,3 +649,81 @@
     
    "fee": 800 //否则收取运费多少分钱
 }
+
+
+插入订单：
+
+**url:/insertOrderform**
+
+**参数：**
+
+{
+"openId":"test",  
+
+"name":"hgh",  //收货地址中的收货人
+
+"address":"北京市周口店",  //收货地址中的地址
+
+"phone":"123131313",    //收货人电话
+
+"giftId":1,         //赠品id
+
+"giftNum":10,           //赠品数量
+
+"transportFee":1000,    //运费，单位分
+
+"sumFirst":10000,       //原价
+
+"sumFinal":11000,          //加上运费和折扣后的价格
+
+"remarksWhenOrder":"尽快发货，老板",      //下单备注
+
+"orderformGoods":[      //订单中的商品
+
+{
+
+"goodsName":"测试商品1",
+	
+"goodsPicture":"http://www.pptbz.com/pptpic/UploadFiles_6909/201211/2012111719294197.jpg",
+			
+"goodsId":1,
+
+"priceId":1,
+
+"goodsPrice":10000,     
+
+"buyNum":2,
+
+"priceModels":[
+"蓝色","180","下装"
+]
+
+}
+
+]
+
+}
+
+获取所有订单：
+
+url:/getOrderformByOpenId
+
+参数：openId
+
+获取一个订单：
+
+url:/getOrderformByOrderformId
+
+参数：orderformId
+
+更改订单：
+
+url：/updateOrderform
+
+参数：orderformId, //订单id
+
+   state, //订单状态0待支付，1待发货，2申请退款，3同意退款，4退款成功，5退款失败，6已发货，7已完成，8已关闭
+    
+   remarksWhenRefund  //申请退款理由
+   
+注意：上面的remarksWhenRefund只在申请退款的时候需要，其他时候不需要
