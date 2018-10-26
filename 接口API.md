@@ -564,6 +564,8 @@
 
 ​        "state": 0   //是否选中，1为选中
 
+  "integral": 1   //vip用积分购买商品所需的积分
+
 ​    }
 
 ]
@@ -600,6 +602,12 @@
 **参数：state, shoppingcarId**
 
 返回：成功返回状态码200，true；失败返回状态码400，false
+
+获取一行购物车商品：
+
+**url：/getShoppingcarGoods**
+
+**参数：shoppingcarId**
 
 获取满减、折扣：
 **url:/getDiscount**
@@ -653,7 +661,7 @@
 注意：如果goodsId为0，则没有赠品，不用显示
 
 获取运费：
-**url：/getTransportFree**
+**url：/getTransportFee**
 
 **参数：无**
 
