@@ -649,7 +649,10 @@
 2.如果是普通用户，返回：
 
 {
-    "goodsId": 1,  //赠品的id
+
+   "fullCondition":10000, //赠送的条件
+    
+   "goodsId": 1,  //赠品的id
     
    "goodsPicture": "123.img", //赠品的图片
     
@@ -816,3 +819,4 @@
 
 ]
 
+获取vip积分
