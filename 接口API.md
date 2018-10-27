@@ -564,8 +564,6 @@
 
 ​        "state": 0   //是否选中，1为选中
 
-  "integral": 1   //vip用积分购买商品所需的积分
-
 ​    }
 
 ]
@@ -686,7 +684,7 @@
 {
 "openId":"test",  
 
-"insertOrder": true, //是否使用积分支付
+"integralOrder": true, //是否使用积分支付
 
 "name":"hgh",  //收货地址中的收货人
 
