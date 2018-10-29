@@ -24,6 +24,12 @@ public class ShoppingcarController {
         return shoppingcarService.selectShoppingcar(openId);
     }
 
+    @RequestMapping(value="/getShoppingcarGoods")
+    public Shoppingcar selectShoppingcarGoodsById(@RequestParam int shoppingcarId) {
+        return shoppingcarService.selectShoppingcarGoodsById(shoppingcarId);
+
+    }
+
     @RequestMapping(value = "/deleteShoppingcar")
     public ResponseEntity<Boolean> deleteShoppingcarGoods(@RequestParam int shoppingcarId){
         if(shoppingcarService.deleteShoppingcarGoods(shoppingcarId)){

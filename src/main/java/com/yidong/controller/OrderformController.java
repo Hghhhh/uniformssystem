@@ -4,6 +4,7 @@ import com.yidong.model.Orderform;
 import com.yidong.service.OrderformService;
 import com.yidong.util.JsonUtil;
 import com.yidong.util.OrderFormId;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+@Slf4j
 @RestController
 public class OrderformController {
     @Autowired
     private OrderformService orderformService;
 
+    /**
+     *
+     * @param orderform 订单信息
+     * @return
+     */
     @RequestMapping(value = "/insertOrderform")
     public ResponseEntity<String> insertOrderform(@RequestBody String orderform){
         Orderform myOrderform = JsonUtil.parseJsonWithGson(orderform,Orderform.class);
@@ -30,11 +36,13 @@ public class OrderformController {
                 return ResponseEntity.ok(orderformId);
             }
             else{
-                return new ResponseEntity(null, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity("参数有误", HttpStatus.BAD_REQUEST);
             }
-        }catch (Exception e){
-            //捕获库存不足的错误
-            return new ResponseEntity(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e){
+            e.printStackTrace();
+            //捕获库存不足的错误和积分不足的错误
+            log.error(e.getMessage());
+            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

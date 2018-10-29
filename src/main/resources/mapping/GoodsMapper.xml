@@ -3,16 +3,25 @@
 <mapper namespace="com.yidong.mapper.GoodsMapper" >
   <resultMap id="Goods" type="Goods" >
     <id column="id" property="goodsId" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="name" property="goodsName" jdbcType="VARCHAR" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
-    <collection property="pictures" javaType="ArrayList" ofType="java.lang.String"
+    <collection property="goodsPicture" javaType="ArrayList" ofType="java.lang.String"
                 column="id" select="selectPicture"></collection>
     <collection property="priceList" javaType="ArrayList" ofType="Price"
                 column="id" select="com.yidong.mapper.PriceMapper.selectPrice"></collection>
   </resultMap>
+  <resultMap id="DetailGoods" type="Goods" >
+    <id column="id" property="goodsId" jdbcType="INTEGER" />
+    <result column="name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <collection property="goodsPicture" javaType="ArrayList" ofType="java.lang.String"
+                column="id" select="selectPicture"></collection>
+    <collection property="priceList" javaType="ArrayList" ofType="Price"
+                column="id" select="com.yidong.mapper.PriceMapper.selectPriceForGoodsDetail"></collection>
+  </resultMap>
   <resultMap id="VipGoods" type="VipGoods" >
     <id column="id" property="goodsId" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="name" property="goodsName" jdbcType="VARCHAR" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
     <result column="integral" property="integral" jdbcType="FLOAT"/>
     <result column="batch" property="batch" jdbcType="INTEGER" />
@@ -20,7 +29,7 @@
     </association>
     <association property="monthRetail" column="id" select="selectMonthRetail">
     </association>
-    <collection property="pictures" javaType="ArrayList" ofType="java.lang.String"
+    <collection property="goodsPicture" javaType="ArrayList" ofType="java.lang.String"
                 column="id" select="selectPicture"></collection>
     <collection property="priceList" javaType="ArrayList" ofType="Price"
                 column="id" select="com.yidong.mapper.PriceMapper.selectPrice"></collection>
@@ -46,7 +55,10 @@
   <select id="selectGoods" resultMap="Goods">
     SELECT id,name,detail from tb_goods where state!=3;
   </select>
-  <select id="selectSingleGoods" resultMap="Goods">
+  <select id="selectGoodsByName" resultMap="Goods" parameterType="java.lang.String">
+    SELECT id,name,detail from tb_goods where state!=3 and name like '%${name}%';
+  </select>
+  <select id="selectSingleGoods" resultMap="DetailGoods">
     SELECT id,name,detail from tb_goods where state!=3 and id=#{goodsId};
   </select>
   <select id="selectSingleVipGoods" resultMap="VipGoods">

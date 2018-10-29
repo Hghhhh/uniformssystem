@@ -20,4 +20,5 @@ public interface AddressService {
     Address selectByAddressId(int addressId);
 
     boolean updateStateByPrimaryKey(String userId,int id);
+
 }

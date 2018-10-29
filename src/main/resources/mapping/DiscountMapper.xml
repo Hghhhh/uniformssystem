@@ -9,6 +9,7 @@
     <result column="end" property="end"  />
   </resultMap>
   <resultMap id="GiftMap" type="com.yidong.model.Gift" >
+    <result column="fullCondition" property="fullCondition"></result>
     <result column="gift" property="goodsId" />
     <result column="num" property="num"></result>
     <association property="goodsName" column="gift" select="com.yidong.mapper.GoodsMapper.selectGoodsName">

@@ -19,4 +19,6 @@ public interface ShoppingcarMapper {
     int selectCarId(String openId);
 
     int updateShoppingcarBuyNumWhenInsert(Map map);
+
+   Shoppingcar selectShoppingcarGoodsById(int id);
 }

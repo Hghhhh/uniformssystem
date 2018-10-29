@@ -8,6 +8,8 @@
     <result column="priceId" property="priceId" ></result>
     <association property="price" column="priceId" select="com.yidong.mapper.PriceMapper.selectPricePrice">
     </association>
+    <!--<association property="integral" column="priceId" select="com.yidong.mapper.PriceMapper.selectPriceIntegral">
+    </association>-->
     <association property="shoppingcarGoods" column="goodsId" select="com.yidong.mapper.GoodsMapper.selectGoodsInfo"></association>
     <collection property="priceModels" column="priceId" select="selectPriceModel"></collection>
   </resultMap>
@@ -22,6 +24,9 @@
     SELECT * from tb_shoppingcar_goods where carId=(
       select id from tb_shoppingcar where userId=#{openId}
     )
+  </select>
+  <select id="selectShoppingcarGoodsById" resultMap="Shoppingcar">
+    SELECT * from tb_shoppingcar_goods where id=#{id}
   </select>
   <update id="updateShoppingcarBuyNumWhenInsert" parameterType="map">
     UPDATE tb_shoppingcar_goods set buyNum=#{buyNum}+buyNum where carId=#{carId} and goodsId=#{goodsId} and priceId=#{priceId}

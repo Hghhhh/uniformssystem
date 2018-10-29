@@ -19,4 +19,6 @@ public interface OrderformService {
 
     boolean updateOrderform(String orderformId,String remarksWhenRefund,Integer state);
 
+    String selectOrderformIdIsExistInIntegral(String orderformId);
+
 }

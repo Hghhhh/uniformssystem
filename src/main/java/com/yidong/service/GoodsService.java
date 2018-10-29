@@ -12,4 +12,6 @@ public interface GoodsService {
     VipGoods selectSingleVipGoods(int goodsId);
     Goods selectSingleGoods(int goodsId);
     List<Goods> selecrGoodsByTypeId(int smallTypeId);
+
+    List<Goods>  selectGoodsByName(String name);
 }

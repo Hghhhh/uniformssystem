@@ -3,8 +3,6 @@ package com.yidong.mapper;
 import com.yidong.model.GoodsIdAndBuyNum;
 import com.yidong.model.Orderform;
 import com.yidong.model.OrderformGoods;
-import org.springframework.core.annotation.Order;
-
 import java.util.List;
 import java.util.Map;
 public interface OrderformMapper {
@@ -23,4 +21,16 @@ public interface OrderformMapper {
     List<GoodsIdAndBuyNum> selectGoodsIdAndBuyNum(String orderformId);
 
     int updateIntegral(List<GoodsIdAndBuyNum> goodsIdAndBuyNums);
+
+    int insertOrderformIntegral(Map map);
+
+    Map selectUserIdAndIntegralByOrderformId(String orderform);
+
+    int updateVipIntegral(Map map);
+
+    String selectOrderformIdIsExistInIntegral(String id);
+
+    int deleteOrderfornIntegral(String orderformId);
+
+    String selectVipUserByOrderformId(String orderformId);
 }

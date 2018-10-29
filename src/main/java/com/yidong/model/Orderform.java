@@ -5,6 +5,8 @@ import java.util.List;
 public class Orderform {
     private String orderformId;
 
+    private boolean integralOrder;
+
     private String openId;
 
     private String name;
@@ -37,7 +39,7 @@ public class Orderform {
 
 
     public void setOrderformIdForOrderformGoods(){
-        for(OrderformGoods og:this.orderformGoods){
+        for(OrderformGoods og : this.orderformGoods){
             og.setOrderformId(this.orderformId);
         }
     }
@@ -168,5 +170,19 @@ public class Orderform {
 
     public void setRemarksWhenRefund(String remarksWhenRefund) {
         this.remarksWhenRefund = remarksWhenRefund;
+    }
+
+    public boolean isIntegralOrder() {
+        return integralOrder;
+    }
+
+    public void setIntegralOrder(String orderformId) {
+        if(null==orderformId||"".equals(orderformId)){
+            this.integralOrder = false;
+        }
+        else{
+            this.integralOrder = true;
+        }
+
     }
 }

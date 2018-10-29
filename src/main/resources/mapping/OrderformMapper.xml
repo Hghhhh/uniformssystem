@@ -17,6 +17,8 @@
     <result column="giftNum" property="giftNum" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="INTEGER" />
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <association property="integralOrder" column="id" select="selectOrderformIdIsExistInIntegral">
+    </association>
     <collection property="orderformGoods" javaType="ArrayList" ofType="OrderformGoods" column="id"
                 select="selectOrderformGoods">
     </collection>
@@ -39,7 +41,7 @@
   </sql>
 
   <select id="selectOrderform" resultMap="OrderformMap">
-    SELECT * from tb_orderform where userId=#{opeId}
+    SELECT * from tb_orderform where userId=#{openId}
   </select>
   <select id="selectOrderformById" resultMap="OrderformMap">
     SELECT * from tb_orderform where id=#{orderformId}
@@ -55,7 +57,7 @@
   </select>
   <insert id="insertOrderform" parameterType="Orderform">
     insert into tb_orderform values (#{orderformId},#{sumFirst},#{sumFinal},#{transportFee},#{openId},#{name},#{address},
-    #{phone},#{remarksWhenOrder},#{remarksWhenRefund},#{remarksServiceReturn},#{giftId},#{giftNum},0,now());
+    #{phone},#{remarksWhenOrder},#{remarksWhenRefund},#{remarksServiceReturn},#{giftId},#{giftNum},#{state},now());
   </insert>
   <insert id="insertOrderformGoods" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
     insert into tb_orderform_goods
@@ -70,7 +72,7 @@
       #{orderformGoods.goodsPrice},
       #{orderformGoods.buyNum},
       #{orderformGoods.priceId}
-      );
+      )
     </foreach >
   </insert>
   <insert id="insertOrderformGoodsModel" parameterType="map" >
@@ -100,4 +102,29 @@
       update tb_vip set integral = integral + (#{goodsIdAndBuyNum.buyNum}*#{goodsIdAndBuyNum.integral}) where goodsId=#{goodsIdAndBuyNum.goodsId}
     </foreach>
   </update>
+
+ <insert id="insertOrderformIntegral" parameterType="map">
+    insert into tb_orderform_integral values(#{orderformId},#{userId},#{integral});
+    update tb_vip set integral=integral-(#{integral}/100) where openId=#{userId};
+  </insert>
+
+  <select id="selectUserIdAndIntegralByOrderformId" resultType="map">
+    SELECT userId,integral from tb_orderform_integral where orderformId=#{orderformId};
+    DELETE FROM  tb_orderform_integral  where orderformId=#{orderformId};
+  </select>
+
+  <select id="selectOrderformIdIsExistInIntegral" resultType="java.lang.String">
+    select orderformId from  tb_orderform_integral where orderformId=#{id}
+  </select>
+  <update id="updateVipIntegral" parameterType="map">
+    update tb_vip set integral=integral+(#{integral}/100) where openId=#{userId};
+  </update>
+
+  <delete id="deleteOrderfornIntegral">
+    DELETE from tb_orderform_integral where orderformId=#{orderformId}
+  </delete>
+
+  <select id="selectVipUserByOrderformId" resultType="java.lang.String">
+    select openId from tb_vip where openId=(select userId from tb_orderform where id=#{orderformId})
+  </select>
 </mapper>

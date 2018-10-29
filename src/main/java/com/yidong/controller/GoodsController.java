@@ -64,4 +64,8 @@ public class GoodsController {
         return goodsService.selecrGoodsByTypeId(typeId);
     }
 
+    @RequestMapping(value = "/goods/nameGoods")
+    public List<Goods> selectGoodsByName(@RequestParam  String name) {
+        return goodsService.selectGoodsByName(name);
+    }
 }

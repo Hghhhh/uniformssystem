@@ -18,7 +18,9 @@ public interface AddressMapper {
 
     int updateByPrimaryKey(Address record);
 
-    int updateStateByPrimaryKey(Map map);
+    int updateStateByPrimaryKey(int id);
 
     int insertUserAddress(Map map);
+
+    int updateStateByUserId(String userId);
 }

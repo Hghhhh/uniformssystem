@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class DiscountController  {
 
@@ -27,15 +29,14 @@ public class DiscountController  {
     }
 
     @RequestMapping("/getGift")
-    public Gift selectGift(@RequestParam String openId){
+    public List<Gift> selectGift(@RequestParam String openId){
         if(userMapper.isVip(openId)!=null){
             return null;
         }
         return discountService.selectGift();
     }
 
-
-    @RequestMapping("/getTransportFree")
+    @RequestMapping("/getTransportFee")
     public TransportFee selectTransportFree(){
         return discountService.selectTransportFree();
     }

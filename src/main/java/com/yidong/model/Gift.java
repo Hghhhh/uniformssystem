@@ -2,6 +2,7 @@ package com.yidong.model;
 
 public class Gift {
 
+    private int fullCondition;
     private int goodsId;
     private String goodsPicture;
     private String goodsName;
@@ -37,5 +38,13 @@ public class Gift {
 
     public void setNum(int num) {
         this.num = num;
+    }
+
+    public int getFullCondition() {
+        return fullCondition;
+    }
+
+    public void setFullCondition(int fullCondition) {
+        this.fullCondition = fullCondition;
     }
 }

@@ -24,6 +24,5 @@ public interface UserService {
 
     boolean updatePhone(String openId,String phone);
 
-
     String selectIntegral(String openId);
 }

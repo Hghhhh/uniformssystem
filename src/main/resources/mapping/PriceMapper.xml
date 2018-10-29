@@ -4,7 +4,16 @@
     <resultMap id="PriceMap" type="Price" >
         <id column="id" property="priceId" jdbcType="INTEGER" />
         <result column="price" property="price" jdbcType="INTEGER" />
-        <result column="num" property="num" jdbcType="INTEGER" />
+       <!-- <result column="integral" property="integral"></result>-->
+        <collection property="models" javaType="ArrayList" ofType="java.lang.String"
+                    column="id" select="selectModel"></collection>
+    </resultMap>
+    <resultMap id="PriceForGoodsDetailMap" type="Price" >
+        <id column="id" property="priceId" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="INTEGER" />
+        <!-- <result column="integral" property="integral"></result>-->
+        <association property="num" column="id" select="selectGoodsNum">
+        </association>
         <collection property="models" javaType="ArrayList" ofType="java.lang.String"
                     column="id" select="selectModel"></collection>
     </resultMap>
@@ -23,9 +32,18 @@
     <select id="selectPrice" resultMap="PriceMap">
         select * from tb_goods_price where goodsId=#{id,jdbcType=INTEGER}
     </select>
+    <select id="selectPriceForGoodsDetail" resultMap="PriceForGoodsDetailMap">
+        select * from tb_goods_price where goodsId=#{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectGoodsNum" resultType="java.lang.Integer">
+        select num from tb_price_num where priceId = #{id}
+    </select>
     <select id="selectPricePrice" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         select price from tb_goods_price where id=#{priceId,jdbcType=INTEGER}
     </select>
+  <!--  <select id="selectPriceIntegral" resultType="java.lang.Float" parameterType="java.lang.Integer">
+        select integral from tb_goods_price where id=#{priceId,jdbcType=INTEGER}
+    </select>-->
     <select id="selectPriceForVip" resultMap="PriceMapForVip">
         select * from tb_goods_price where goodsId=#{id,jdbcType=INTEGER}
     </select>
@@ -38,9 +56,13 @@
         SELECT modelName as bigModelName from tb_big_model where id=#{bigModelId}
     </select>
     <update id="reduceNum" >
-        update set num=num-#{buyNum} where id=#{priceId}
+        update tb_price_num set num=num-#{buyNum} where priceId=#{priceId}
     </update>
     <update id="returnNum">
-        update set num=num+#{buyNum} where id=#{priceId}
+        update tb_price_num set num=num+#{buyNum} where priceId=#{priceId}
     </update>
+
+    <select id="selectNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select num from tb_price_num where priceId=#{priceId}
+    </select>
 </mapper>

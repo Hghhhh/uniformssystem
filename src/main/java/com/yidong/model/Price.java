@@ -47,4 +47,5 @@ public class Price {
     public void setPriceId(int priceId) {
         this.priceId = priceId;
     }
+
 }

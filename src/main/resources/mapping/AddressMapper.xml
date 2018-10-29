@@ -55,10 +55,12 @@
       state=#{state,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateStateByPrimaryKey" parameterType="map">
-  UPDATE tb_address set state=0 where id in (
+  <update id="updateStateByUserId">
+      UPDATE tb_address set state=0 where id in (
       SELECT addressId as id from tb_user_address where userId=#{userId}
     ) AND state=1;
+  </update>
+  <update id="updateStateByPrimaryKey">
     update tb_address
     set state=1
     where id = #{id,jdbcType=INTEGER}

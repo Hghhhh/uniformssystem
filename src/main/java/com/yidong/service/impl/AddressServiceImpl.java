@@ -5,6 +5,7 @@ import com.yidong.model.Address;
 import com.yidong.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,6 @@ public class AddressServiceImpl implements AddressService {
         return addressMapper.selectByPrimaryKey(userId);
     }
 
-
     @Override
     public boolean updateByPrimaryKey(Address record) {
         return addressMapper.updateByPrimaryKey(record)==1;
@@ -54,12 +54,13 @@ public class AddressServiceImpl implements AddressService {
         return addressMapper.selectByAddressId(addressId);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean updateStateByPrimaryKey(String userId,int id) {
-        Map map = new HashMap();
-        map.put("id",id);
-        map.put("userId",userId);
-        return addressMapper.updateStateByPrimaryKey(map)>0;
+        addressMapper.updateStateByUserId(userId);
+        return addressMapper.updateStateByPrimaryKey(id)>0?true:false;
     }
+
+
 
 }

@@ -62,5 +62,10 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
         return shoppingcarMapper.selectCarId(openId);
     }
 
+    @Override
+    public Shoppingcar selectShoppingcarGoodsById(int id) {
+        return shoppingcarMapper.selectShoppingcarGoodsById(id);
+    }
+
 
 }

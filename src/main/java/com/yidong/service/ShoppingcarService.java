@@ -17,4 +17,6 @@ public interface ShoppingcarService {
 
     int selectCarId(String openId);
 
+    Shoppingcar selectShoppingcarGoodsById(int id);
+
 }

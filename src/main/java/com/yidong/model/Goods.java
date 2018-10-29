@@ -12,30 +12,14 @@ public class Goods {
 
     private Integer goodsId;
 
-    private String name;
+    private String goodsName;
 
     private String detail;
 
-    private List<String> pictures;
+    private List<String> goodsPicture;
 
     private List<Price> priceList;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-
-    public List<String> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<String> pictures) {
-        this.pictures = pictures;
-    }
 
     public String getDetail() {
         return detail;
@@ -93,5 +77,21 @@ public class Goods {
         }
         this.maxPrice=max;
         this.minPrice=min;
+    }
+
+    public List<String> getGoodsPicture() {
+        return goodsPicture;
+    }
+
+    public void setGoodsPicture(List<String> goodsPicture) {
+        this.goodsPicture = goodsPicture;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 }

@@ -16,4 +16,10 @@ public interface PriceMapper {
     int reduceNum(@Param("buyNum")int buyNum, @Param("priceId")int priceId);
 
     int returnNum(@Param("buyNum")int buyNum, @Param("priceId")int priceId);
+
+   // Float selectPriceIntegral(int priceId);
+
+    Integer selectNum(int priceId);
+
+    Price selectPriceForGoodsDetail(int id);
 }

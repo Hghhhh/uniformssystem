@@ -10,6 +10,7 @@ public class Shoppingcar {
     private List<String> priceModels;
     private int buyNum;
     private int state;
+    private float integral;
 
     public List<String> getPriceModels() {
         return priceModels;
@@ -67,5 +68,13 @@ public class Shoppingcar {
 
     public void setShoppingcarGoods(GoodsInfo shoppingcarGoods) {
         this.shoppingcarGoods = shoppingcarGoods;
+    }
+
+    public float getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(float integral) {
+        this.integral = integral;
     }
 }

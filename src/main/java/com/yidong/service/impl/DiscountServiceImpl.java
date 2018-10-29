@@ -9,6 +9,8 @@ import com.yidong.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DiscountServiceImpl implements DiscountService {
     @Autowired
@@ -20,7 +22,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
-    public Gift selectGift() {
+    public List<Gift> selectGift() {
         return discountMapper.selectGift();
     }
 

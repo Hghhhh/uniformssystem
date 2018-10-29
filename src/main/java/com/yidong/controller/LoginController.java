@@ -117,4 +117,9 @@ public class LoginController {
            return new ResponseEntity(phone,HttpStatus.BAD_REQUEST);
        }
     }
+
+    @RequestMapping("/getIntegral")
+    public Float getIntegral(@RequestParam String openId){
+        return Float.valueOf(userService.selectIntegral(openId));
+    }
 }

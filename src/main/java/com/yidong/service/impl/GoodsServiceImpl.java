@@ -38,4 +38,9 @@ public class GoodsServiceImpl implements GoodsService {
     public List<Goods> selecrGoodsByTypeId(int smallTypeId) {
         return goodsMapper.selecrGoodsByTypeId(smallTypeId);
     }
+
+    @Override
+    public List<Goods> selectGoodsByName(String name) {
+        return goodsMapper.selectGoodsByName(name);
+    }
 }
