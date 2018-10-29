@@ -645,7 +645,7 @@
 返回:
 1.如果是vip用户，返回null；
 2.如果是普通用户，返回：
-
+[
 {
 
    "fullCondition":10000, //赠送的条件
@@ -657,7 +657,20 @@
    "goodsName": "test",  //赠品名称
     
    "num": 1  //赠送数量
+},
+
+{
+   "fullCondition": 100,
+        
+   "goodsId": 1,
+        
+   "goodsPicture": "https://ss0.bdstatic.com/-0U0b8Sm1A5BphGlnYG/tam-ogel/4400d2a6582f74265ef66056d816693a_250_250.jpg",
+        
+   "goodsName": "test",
+        
+   "num": 10
 }
+]
 
 注意：如果goodsId为0，则没有赠品，不用显示
 
