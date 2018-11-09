@@ -77,6 +77,7 @@
 ​                "priceId": 1,                  //价格id
 
 ​                "price": 4665,        //价格，单位为分，前端需除以100换成元显示
+               "tradePrice":4655, //批发价
                 "integral": 21,       //vip用积分购买需要花费的积分
 
 ​                "num": 100,          //库存
@@ -175,7 +176,7 @@
 ​                "priceId": 1,                  //价格id
 
 ​                "price": 4665,        //价格，单位为分，前端需除以100换成元显示
-
+                  "tradePrice":4655, //批发价
 ​                "num": 100,          //库存
 
 ​                "models": [      //商品型号
@@ -373,7 +374,7 @@
 
 **url:/goods/singleGoods**
 
-**参数：goodsId,openId**
+**参数：goodsId**
 
 返回：
 
@@ -406,6 +407,8 @@
 
 ​            "price": 4665,
 
+   "tradePrice":4655,  //批发价
+
 ​            "num": 100,
 
 ​            "models": [
@@ -435,7 +438,7 @@
 ​            "priceId": 2,
 
 ​            "price": 5500,
-
+            "tradePrice":4655, //批发价
 ​            "num": 100,
 
 ​            "models": [
@@ -585,7 +588,7 @@
 
 **参数：buyNum，shoppingcarId**
 
-返回：成功返回状态码200，true；失败返回状态码400，false
+返回：成功返回状态码200，true；失败返回状态码400，false,表示库存不足
 
  
  添加购物车商品：
@@ -837,3 +840,34 @@
 **参数：openId**
 
 返回：vip的积分，如果为-1，则该用户为普通用户
+
+
+发起支付
+
+**url:/wxPay**
+
+**参数：openId, orderformId**
+
+返回数据：
+paySign，appid, nonceStr, package, timeStamp
+
+后台出错：返回false
+
+①	500：微信支付内部错误
+
+②	400：该订单已经过期失效！	
+
+signType为MD5
+
+退款
+
+**url: /wxRefund**
+
+**参数：orderformId**
+
+返回数据：Boolean，成功返回true，失败返回false
+
+后台出错： 
+400:该订单目前不可退款，请刷新重试
+500：服务器后台出错
+
