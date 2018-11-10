@@ -385,6 +385,11 @@
     
    "minPrice": 4665,
 
+   "maxTradePrice": 5500,
+    //商品批发价格范围
+    
+   "minTradePrice": 4665,
+
 ​    "goodsId": 1,
 
 ​    "name": "test",
