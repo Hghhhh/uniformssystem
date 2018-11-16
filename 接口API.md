@@ -876,3 +876,18 @@ signType为MD5
 400:该订单目前不可退款，请刷新重试
 500：服务器后台出错
 
+获得推荐商品：
+
+**url:/goods/recommendGoods**
+
+**参数：num(要返回的推荐商品数量，如果不填返回所有)**
+
+返回数据： List<Goods>
+
+获得热销商品：
+
+**url:/goods/hotGoods**
+
+**参数：无**
+
+返回数据：List<Goods> ，3个商品（如果有）
