@@ -32,14 +32,21 @@
     <collection property="goodsPicture" javaType="ArrayList" ofType="java.lang.String"
                 column="id" select="selectPicture"></collection>
     <collection property="priceList" javaType="ArrayList" ofType="Price"
-                column="id" select="com.yidong.mapper.PriceMapper.selectPrice"></collection>
+                column="id" select="com.yidong.mapper.PriceMapper.selectPriceForVip"></collection>
   </resultMap>
   <resultMap id="GoodsInfoMap" type="GoodsInfo" >
     <id column="id" property="goodsId" jdbcType="INTEGER" />
     <result column="name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="batch" property="batch" />
     <association property="goodsPicture" column="id" select="selectShoppingcarGoodsPicture">
     </association>
   </resultMap>
+  <select id="selectRecommendGoods" resultMap="Goods" parameterType="java.lang.Integer">
+    SELECT id,name,detail from tb_goods where state!=3 and recommend=1
+    <if test="num!=0">
+      limit #{num}
+    </if>
+  </select>
   <select id="selectShoppingcarGoodsPicture" resultType="java.lang.String">
     SELECT imgAddress from tb_goods_picture where goodsId=#{id} group by goodsId
   </select>
@@ -62,13 +69,13 @@
     SELECT id,name,detail from tb_goods where state!=3 and id=#{goodsId};
   </select>
   <select id="selectSingleVipGoods" resultMap="VipGoods">
-    SELECT id,name,detail,integral,batch from tb_goods where id=#{goodsId} and state!=3;
+    SELECT id,name,detail,batch from tb_goods where id=#{goodsId} and state!=3;
   </select>
-  <select id="selectVipGoods" resultMap="VipGoods" parameterType="java.lang.Integer">
-    SELECT id,name,detail,integral,batch from tb_goods where id=#{goodsId} and state!=3;
+  <select id="selectVipGoods" resultMap="VipGoods" >
+    SELECT id,name,detail,batch from tb_goods where state!=3;
   </select>
   <select id="selectGoodsInfo" resultMap="GoodsInfoMap" parameterType="java.lang.Integer">
-    SELECT id,name from tb_goods where id=#{goodsId}
+    SELECT id,name,batch from tb_goods where id=#{goodsId}
   </select>
   <select id="selectGoodsName" resultType="java.lang.String">
     SELECT name from tb_goods where id=#{goodsId}
@@ -76,5 +83,13 @@
 
   <select id="selecrGoodsByTypeId" resultMap="Goods">
       SELECT id,name,detail from tb_goods where state!=3 and smallTypeId=#{smalTypeId};
+  </select>
+  
+  <select id="selectRetailHot" resultType="GoodsHot">
+    SELECT  SUM(num) AS saleNum,goodsId FROM tb_retail GROUP BY goodsId
+  </select>
+
+  <select id="selectWholeHot" resultType="GoodsHot">
+    SELECT  SUM(num) AS saleNum,goodsId FROM tb_wholesale GROUP BY goodsId
   </select>
 </mapper>

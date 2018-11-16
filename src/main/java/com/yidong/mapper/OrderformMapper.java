@@ -3,6 +3,8 @@ package com.yidong.mapper;
 import com.yidong.model.GoodsIdAndBuyNum;
 import com.yidong.model.Orderform;
 import com.yidong.model.OrderformGoods;
+import com.yidong.model.Retail;
+
 import java.util.List;
 import java.util.Map;
 public interface OrderformMapper {
@@ -33,4 +35,10 @@ public interface OrderformMapper {
     int deleteOrderfornIntegral(String orderformId);
 
     String selectVipUserByOrderformId(String orderformId);
+
+    int insertRetail(Retail retail);
+
+    int insertWholesale(Retail retail);
+
+    int reduceIntegral(Map map);
 }

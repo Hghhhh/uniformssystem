@@ -1,11 +1,12 @@
 package com.yidong.service.impl;
 
-import com.sun.javafx.collections.MappingChange;
 import com.yidong.mapper.OrderformMapper;
 import com.yidong.mapper.PriceMapper;
+import com.yidong.mapper.ShoppingcarMapper;
 import com.yidong.model.GoodsIdAndBuyNum;
 import com.yidong.model.Orderform;
 import com.yidong.model.OrderformGoods;
+import com.yidong.model.Retail;
 import com.yidong.service.OrderformService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class OrderformServiceImpl implements OrderformService {
     private OrderformMapper orderformMapper;
     @Autowired
     private PriceMapper priceMapper;
-
+    @Autowired
+    private ShoppingcarMapper shoppingcarMapper;
 
     public void reduceGoodsNum(int priceId,int buyNum){
         if(priceMapper.selectNum(priceId)<buyNum){
@@ -34,9 +36,11 @@ public class OrderformServiceImpl implements OrderformService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean insertOrderform(Orderform orderform) {
-        //减库存
+        int carId = shoppingcarMapper.selectCarId(orderform.getOpenId());
+        //减库存,删除购物车商品
         for(OrderformGoods orderformGoods: orderform.getOrderformGoods()) {
             reduceGoodsNum(orderformGoods.getPriceId(),orderformGoods.getBuyNum());
+            shoppingcarMapper.deleteShoppingcarGoodsByMap(carId,orderformGoods.getPriceId(),orderformGoods.getGoodsId());
         }
        //如果是使用积分支付的话，插入订单积分表，记录使用的积分数
         if(orderform.isIntegralOrder()){
@@ -44,8 +48,14 @@ public class OrderformServiceImpl implements OrderformService {
             map.put("orderformId",orderform.getOrderformId());
             map.put("userId",orderform.getOpenId());
             map.put("integral",orderform.getSumFinal());
-            orderformMapper.insertOrderformIntegral(map);
-            orderform.setState(1);
+            //如果减积分操作没有执行，返回false
+            if(orderformMapper.reduceIntegral(map)>0){
+                orderformMapper.insertOrderformIntegral(map);
+                orderform.setState(1);
+            }
+            else{
+                return false;
+            }
         }
         else{
             orderform.setState(0);
@@ -58,11 +68,9 @@ public class OrderformServiceImpl implements OrderformService {
     @Override
     public boolean insertOrderformGoods(List<OrderformGoods> orderformGoodsList) {
         boolean flag = orderformMapper.insertOrderformGoods(orderformGoodsList)>0?true:false;
-        System.out.println(flag+"flag");
         if(flag) {
             for (OrderformGoods orderformGoods : orderformGoodsList) {
-                flag=this.insertOrderformGoodsModel(orderformGoods.getId(), orderformGoods.getPriceModels());
-                System.out.println(flag+"flag");
+                flag=this.insertOrderformGoodsModel(orderformGoods.getOrderformGoodsId(), orderformGoods.getPriceModels());
             }
         }
         else{
@@ -99,19 +107,42 @@ public class OrderformServiceImpl implements OrderformService {
         map.put("state",state);
         if(state==7){
             String vipUserId = orderformMapper.selectVipUserByOrderformId(orderformId);
+            Orderform orderform = orderformMapper.selectOrderformById(orderformId);
+            Retail retail = new Retail();
+            retail.setOrderformId(orderform.getOrderformId());
+            retail.setSum(orderform.getSumFinal());
+            retail.setTime(orderform.getCreateTime());
+            retail.setUserId(orderform.getOpenId());
             //如果订单完结，且该订单不是vip用户的，才给vip加积分
             if(null==vipUserId||
                     "".equals(vipUserId)){
                 List<GoodsIdAndBuyNum> goodsIdAndBuyNums = orderformMapper.selectGoodsIdAndBuyNum(orderformId);
                 orderformMapper.updateIntegral(goodsIdAndBuyNums);
+                //订单完结，订单不是vip的，则添加零售表
+                for(OrderformGoods orderformGoods : orderform.getOrderformGoods()){
+                    retail.setGoodsId(orderformGoods.getGoodsId());
+                    retail.setNum(orderformGoods.getBuyNum());
+                    orderformMapper.insertRetail(retail);
+                }
+            }
+            else{
+                //订单完结，订单是vip的，则添加批发表
+                for(OrderformGoods orderformGoods : orderform.getOrderformGoods()){
+                    retail.setGoodsId(orderformGoods.getGoodsId());
+                    retail.setNum(orderformGoods.getBuyNum());
+                    orderformMapper.insertWholesale(retail);
+                }
             }
         }
         //如果退款，判断是不是积分付款的，是的话退还积分
         else if(state==4){
             //获取订单积分表中的信息，如果不为空说明是积分支付的
             Map m = orderformMapper.selectUserIdAndIntegralByOrderformId(orderformId);
-            if(!m.isEmpty()){
-                orderformMapper.updateVipIntegral(m);
+
+            if(null!=m ){
+                if(!m.isEmpty()){
+                    orderformMapper.updateVipIntegral(m);
+                }
             }
             Orderform orderform = selectOrderformById(orderformId);
             //退还库存

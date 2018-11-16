@@ -11,6 +11,8 @@ public interface PriceMapper {
 
     int selectPricePrice(int priceId);
 
+    int  selectTradePrice(int priceId);
+
     Price selectPriceForVip(int id);
 
     int reduceNum(@Param("buyNum")int buyNum, @Param("priceId")int priceId);

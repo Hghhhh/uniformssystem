@@ -1,6 +1,7 @@
 package com.yidong.service.impl;
 
 import com.yidong.mapper.ShoppingcarMapper;
+import com.yidong.mapper.UserMapper;
 import com.yidong.model.Shoppingcar;
 import com.yidong.service.ShoppingcarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +14,35 @@ import java.util.List;
 public class ShoppingcarServiceImpl implements ShoppingcarService {
     @Autowired
     private ShoppingcarMapper shoppingcarMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public List<Shoppingcar> selectShoppingcar(String openId) {
-        return shoppingcarMapper.selectShoppingcar(openId);
+
+        String integral=userMapper.selectIntegral(openId);
+        if(integral==null || "".equals(integral)){
+            integral="-1";
+        }
+        boolean isVip = Float.valueOf(integral)==-1?false:true;
+        if(isVip){
+            return shoppingcarMapper.selectVipShoppingcar(openId);
+        }
+        else{
+            List<Shoppingcar> shoppingcars = shoppingcarMapper.selectShoppingcar(openId);
+            for(Shoppingcar shoppingcar:shoppingcars){
+                shoppingcar.getShoppingcarGoods().setBatch(1);
+            }
+            return shoppingcars;
+        }
     }
 
     @Override
     public boolean updateShoppingcarBuyNum(int buyNum, int id) {
+        int priceNum = shoppingcarMapper.selectPriceNumByShoppingcarGoodsId(id);
+        if(buyNum>priceNum){
+            return false;
+        }
         Map map = new HashMap();
         map.put("buyNum",buyNum);
         map.put("id",id);

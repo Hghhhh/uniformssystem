@@ -10,6 +10,10 @@ public class Goods {
 
     private int minPrice;
 
+    private int maxTradePrice;
+
+    private int minTradePrice;
+
     private Integer goodsId;
 
     private String goodsName;
@@ -79,6 +83,23 @@ public class Goods {
         this.minPrice=min;
     }
 
+    public void setMaxAndMinTradePrice(){
+        int max = Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+        int p;
+        for(Price price : this.getPriceList()){
+            p = price.getTradePrice();
+            if(max<p){
+                max=p;
+            }
+            if(min>p){
+                min=p;
+            }
+        }
+        this.maxTradePrice=max;
+        this.minTradePrice=min;
+    }
+
     public List<String> getGoodsPicture() {
         return goodsPicture;
     }
@@ -93,5 +114,21 @@ public class Goods {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public int getMaxTradePrice() {
+        return maxTradePrice;
+    }
+
+    public void setMaxTradePrice(int maxTradePrice) {
+        this.maxTradePrice = maxTradePrice;
+    }
+
+    public int getMinTradePrice() {
+        return minTradePrice;
+    }
+
+    public void setMinTradePrice(int minTradePrice) {
+        this.minTradePrice = minTradePrice;
     }
 }

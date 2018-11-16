@@ -1,6 +1,9 @@
 package com.yidong.controller;
 
 import com.alibaba.fastjson.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import com.yidong.config.WxPayConfig;
 import com.yidong.model.User;
 import com.yidong.service.UserService;

@@ -11,6 +11,8 @@ public class Price {
 
     private int price;
 
+    private int tradePrice;
+
     private int num;
 
     private List<Model> models;
@@ -48,4 +50,11 @@ public class Price {
         this.priceId = priceId;
     }
 
+    public int getTradePrice() {
+        return tradePrice;
+    }
+
+    public void setTradePrice(int tradePrice) {
+        this.tradePrice = tradePrice;
+    }
 }

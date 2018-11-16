@@ -3,7 +3,15 @@ package com.yidong.model;
 import java.util.List;
 
 public class OrderformGoods extends GoodsInfo {
-    private int id;
+    public int getOrderformGoodsId() {
+        return orderformGoodsId;
+    }
+
+    public void setOrderformGoodsId(int orderformGoodsId) {
+        this.orderformGoodsId = orderformGoodsId;
+    }
+
+    private int orderformGoodsId;
     private String orderformId;
     private int priceId;
     private int goodsPrice;
@@ -50,11 +58,4 @@ public class OrderformGoods extends GoodsInfo {
         this.goodsPrice = goodsPrice;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 }

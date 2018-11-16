@@ -24,6 +24,7 @@
     </collection>
   </resultMap>
   <resultMap id="OrderformGoodsMap" type="OrderformGoods">
+    <result column="id" property="orderformGoodsId"></result>
     <result column="goodsId" property="goodsId"></result>
     <result column="goodsName" property="goodsName"></result>
     <result column="goodsPicture" property="goodsPicture"></result>
@@ -104,9 +105,12 @@
   </update>
 
  <insert id="insertOrderformIntegral" parameterType="map">
-    insert into tb_orderform_integral values(#{orderformId},#{userId},#{integral});
-    update tb_vip set integral=integral-(#{integral}/100) where openId=#{userId};
+    insert into tb_orderform_integral values(#{orderformId},#{userId},#{integral})
+
   </insert>
+  <update id="reduceIntegral"  parameterType="map">
+     update tb_vip set integral=integral-(#{integral}/100) where openId=#{userId}
+  </update>
 
   <select id="selectUserIdAndIntegralByOrderformId" resultType="map">
     SELECT userId,integral from tb_orderform_integral where orderformId=#{orderformId};
@@ -127,4 +131,13 @@
   <select id="selectVipUserByOrderformId" resultType="java.lang.String">
     select openId from tb_vip where openId=(select userId from tb_orderform where id=#{orderformId})
   </select>
+
+
+  <insert id="insertRetail" parameterType="Retail">
+    insert into tb_retail values (#{goodsId},#{orderformId},#{num},#{time},#{userId},#{sum});
+  </insert>
+
+  <insert id="insertWholesale" parameterType="Retail">
+    insert into tb_wholesale values (#{goodsId},#{orderformId},#{num},#{time},#{sum});
+  </insert>
 </mapper>

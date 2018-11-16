@@ -3,6 +3,7 @@ package com.yidong.model;
 public class GoodsInfo {
     private int goodsId;
     private String goodsName;
+    private int batch;
     private String goodsPicture;
 
     public int getGoodsId() {
@@ -27,5 +28,13 @@ public class GoodsInfo {
 
     public void setGoodsPicture(String goodsPicture) {
         this.goodsPicture = goodsPicture;
+    }
+
+    public int getBatch() {
+        return batch;
+    }
+
+    public void setBatch(int batch) {
+        this.batch = batch;
     }
 }

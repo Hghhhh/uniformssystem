@@ -4,6 +4,7 @@
     <resultMap id="PriceMap" type="Price" >
         <id column="id" property="priceId" jdbcType="INTEGER" />
         <result column="price" property="price" jdbcType="INTEGER" />
+        <result column="tradePrice" property="tradePrice" jdbcType="INTEGER" />
        <!-- <result column="integral" property="integral"></result>-->
         <collection property="models" javaType="ArrayList" ofType="java.lang.String"
                     column="id" select="selectModel"></collection>
@@ -17,11 +18,14 @@
         <collection property="models" javaType="ArrayList" ofType="java.lang.String"
                     column="id" select="selectModel"></collection>
     </resultMap>
-    <resultMap id="PriceMapForVip" type="Price" >
-        <id column="id" property="id" jdbcType="INTEGER" />
-        <result column="price" property="tradePrice" jdbcType="INTEGER" />
-        <result column="num" property="num" jdbcType="INTEGER" />
-        <collection property="models" javaType="ArrayList" ofType="Model"
+    <resultMap id="VipPriceMap" type="Price" >
+        <id column="id" property="priceId" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="INTEGER" />
+        <result column="tradePrice" property="tradePrice" jdbcType="INTEGER" />
+        <!-- <result column="integral" property="integral"></result>-->
+        <association property="num" column="id" select="selectGoodsNum">
+        </association>
+        <collection property="models" javaType="ArrayList" ofType="java.lang.String"
                     column="id" select="selectModel"></collection>
     </resultMap>
     <resultMap id="ModelMap" type="Model" >
@@ -41,10 +45,13 @@
     <select id="selectPricePrice" resultType="java.lang.Integer" parameterType="java.lang.Integer">
         select price from tb_goods_price where id=#{priceId,jdbcType=INTEGER}
     </select>
+    <select id="selectTradePrice" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select tradePrice from tb_goods_price where id=#{priceId,jdbcType=INTEGER}
+    </select>
   <!--  <select id="selectPriceIntegral" resultType="java.lang.Float" parameterType="java.lang.Integer">
         select integral from tb_goods_price where id=#{priceId,jdbcType=INTEGER}
     </select>-->
-    <select id="selectPriceForVip" resultMap="PriceMapForVip">
+    <select id="selectPriceForVip" resultMap="VipPriceMap">
         select * from tb_goods_price where goodsId=#{id,jdbcType=INTEGER}
     </select>
     <select id="selectModel"  resultMap="ModelMap">
