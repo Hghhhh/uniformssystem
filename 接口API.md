@@ -743,7 +743,9 @@
 
 "priceModels":[
 "蓝色","180","下装"
-]
+],
+
+"schoolName":"GDUT"
 
 }
 
@@ -891,3 +893,17 @@ signType为MD5
 **参数：无**
 
 返回数据：List<Goods> ，3个商品（如果有）
+
+
+查询学校
+
+**url：/schoolName**
+
+**参数：schoolName**
+
+返回数据：
+[
+         "1","2","3"
+     ]
+     
+     
