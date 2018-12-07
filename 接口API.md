@@ -917,9 +917,9 @@ signType为MD5
 
 **url：/verifyCode**
 
-**参数：phone，code**
-（phone是手机号，code是客户输入的验证码）
+**参数：phone，code,openId**
+（phone是手机号，code是客户输入的验证码,传openId,后台判断正确后可以直接设置手机号）
 
 **方法：GET**
 
-返回：正确返回true，错误返回false
+返回：验证码正确返回true，错误返回false
