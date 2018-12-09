@@ -716,6 +716,8 @@
 
 "remarksWhenOrder":"尽快发货，老板",      //下单备注
 
+"schoolName":"GDUT",
+
 "orderformGoods":[      //订单中的商品
 
 {
@@ -734,9 +736,7 @@
 
 "priceModels":[
 "蓝色","180","下装"
-],
-
-"schoolName":"GDUT"
+]
 
 }
 
@@ -921,3 +921,14 @@ signType为MD5
 **方法：GET**
 
 返回：验证码正确返回true，错误返回false
+
+
+获取大类商品
+
+**url:/goods/bigTypeGoods**
+
+**参数：bigTypeId**
+
+**方法：GET**
+
+返回：List<Goods>
