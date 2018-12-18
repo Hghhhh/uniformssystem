@@ -886,17 +886,6 @@ signType为MD5
 返回数据：List<Goods> ，3个商品（如果有）
 
 
-查询学校
-
-**url：/schoolName**
-
-**参数：schoolName**
-
-返回数据：
-[
-         "1","2","3"
-     ]
-     
      
      
 
@@ -932,3 +921,99 @@ signType为MD5
 **方法：GET**
 
 返回：List<Goods>
+
+
+
+设置学校名称
+
+**url:/setSchoolName**
+
+**参数：openId，schoolName**
+
+**方法：GET或POST**
+
+返回：true或false
+
+获得用户设置的学校
+
+**url:/getSchoolName**
+
+**参数：openId**
+
+**方法：GET**
+
+返回：学校名
+
+
+查询学校
+
+**url：/schoolName**
+
+**参数：schoolName**
+
+返回数据：
+[
+         "1","2","3"
+]
+     
+     
+获得学校三级联动
+
+**url:/school**
+
+**参数:无**
+
+**方法：GET**
+
+返回数据：
+[
+    {
+        "bigType": "广东",
+        "children": [
+            {
+                "smType": "广州",
+                "children": [
+                    "1",
+                    "2",
+                    "3"
+                ]
+            },
+            {
+                "smType": "深圳",
+                "children": [
+                    "4",
+                    "5"
+                ]
+            }
+        ]
+    },
+    {
+        "bigType": "上海",
+        "children": [
+            {
+                "smType": "黄埔区",
+                "children": [
+                    "6",
+                    "7"
+                ]
+            },
+            {
+                "smType": "高新区",
+                "children": [
+                    "8"
+                ]
+            }
+        ]
+    },
+    {
+        "bigType": "北京",
+        "children": [
+            {
+                "smType": "四合院",
+                "children": [
+                    "9"
+                ]
+            }
+        ]
+    }
+]
