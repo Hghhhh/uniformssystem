@@ -327,6 +327,8 @@
 
 ​        "address": "12312311",  //收货地址
 
+        “detailAddress”:"21313" //详细地址
+
 ​        "phone": "12313121",   //收货人电话   
             
    "state":1或0
@@ -750,11 +752,20 @@
 
 **参数：openId**
 
+返回：{
+"flag":true//true表示有数据，flag表示没有数据不用再请求了
+“orderforms”:[{
+订单...
+}]
+}
+
 获取一个订单：
 
 **url:/getOrderformByOrderformId**
 
 **参数：orderformId**
+
+
 
 更改订单：
 
@@ -836,6 +847,11 @@
 **url:/getIntegral**
 
 **参数：openId**
+
+返回数据：{
+    "schoolName": "GDUT",
+    "integral": 8
+}
 
 返回：vip的积分，如果为-1，则该用户为普通用户
 
