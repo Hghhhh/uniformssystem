@@ -24,4 +24,6 @@ public interface PriceMapper {
     Integer selectNum(int priceId);
 
     Price selectPriceForGoodsDetail(int id);
+
+    String selectCode(@Param("priceId")int priceId,@Param("goodsId")int goodsId);
 }

@@ -2,19 +2,10 @@ package com.yidong.model;
 
 public class GoodsIdAndBuyNum {
 
-    private int goodsId;
-
     private int buyNum;
 
     private float integral;
 
-    public int getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(int goodsId) {
-        this.goodsId = goodsId;
-    }
 
     public int getBuyNum() {
         return buyNum;

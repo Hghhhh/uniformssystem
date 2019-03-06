@@ -1,11 +1,10 @@
 package com.yidong.model;
 
-public class GoodsInfo {
+public class GiftInfo {
     private int goodsId;
     private String goodsName;
-    private int batch;
+    private int num;
     private String goodsPicture;
-    private int state;
 
     public int getGoodsId() {
         return goodsId;
@@ -31,19 +30,12 @@ public class GoodsInfo {
         this.goodsPicture = goodsPicture;
     }
 
-    public int getBatch() {
-        return batch;
+    public int getNum() {
+        return num;
     }
 
-    public void setBatch(int batch) {
-        this.batch = batch;
+    public void setNum(int num) {
+        this.num = num;
     }
 
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
 }

@@ -24,4 +24,10 @@ public class TypeController {
     public List<Type> getSmallType(@RequestParam int typeId) {
         return typeService.selectSmallType(typeId);
     }
+
+    /*@RequestMapping("/schoolName")
+    public List<String> getSchoolName(@RequestParam int smallTypeId){
+        return typeService.selectSchoolName(smallTypeId);
+    }*/
+
 }

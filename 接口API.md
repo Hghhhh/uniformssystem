@@ -750,7 +750,7 @@
 
 **url:/getOrderformByOpenId**
 
-**参数：openId**
+**参数：openId,flag(可不传，不传返回全部)**
 
 返回：{
 "flag":true//true表示有数据，flag表示没有数据不用再请求了

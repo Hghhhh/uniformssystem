@@ -8,4 +8,6 @@ public interface TypeService {
     List<Type> selectBigType();
 
     List<Type> selectSmallType(int typeId);
+
+    List<String> selectSchoolName(int smallTypeId);
 }

@@ -37,6 +37,14 @@ public class Orderform {
 
     private String remarksServiceReturn;
 
+    private String schoolName;
+
+    private int isVip;
+
+    private GiftInfo giftInfo;
+
+    private Express express;
+
 
     public void setOrderformIdForOrderformGoods(){
         for(OrderformGoods og : this.orderformGoods){
@@ -184,5 +192,40 @@ public class Orderform {
             this.integralOrder = true;
         }
 
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public GiftInfo getGiftInfo() {
+        return giftInfo;
+    }
+
+    public void setGiftInfo(GiftInfo giftInfo) {
+        this.giftInfo = giftInfo;
+        if(giftInfo!=null){
+            this.giftInfo.setNum(giftNum);
+        }
+    }
+
+    public int getIsVip() {
+        return isVip;
+    }
+
+    public void setIsVip(int isVip) {
+        this.isVip = isVip;
+    }
+
+    public Express getExpress() {
+        return express;
+    }
+
+    public void setExpress(Express express) {
+        this.express = express;
     }
 }

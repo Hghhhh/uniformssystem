@@ -72,4 +72,8 @@
     <select id="selectNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         select num from tb_price_num where priceId=#{priceId}
     </select>
+
+    <select id="selectCode" resultType="java.lang.String">
+        select code from tb_goods_price where id=#{priceId} and goodsId=#{goodsId}
+    </select>
 </mapper>

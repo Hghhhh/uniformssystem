@@ -37,8 +37,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public List<Goods> selecrGoodsByTypeId(int smallTypeId) {
-        return goodsMapper.selecrGoodsByTypeId(smallTypeId);
+    public List<Goods> selectGoodsBySmallTypeId(int smallTypeId) {
+        return goodsMapper.selectGoodsBySmallTypeId(smallTypeId);
     }
 
     @Override
@@ -74,5 +74,15 @@ public class GoodsServiceImpl implements GoodsService {
         goodsHots.addAll(retailGoodsHotsTem);
         goodsHots.addAll(wholeGoodsHotsTem);
         return goodsHots;
+    }
+
+    @Override
+    public List<Goods> selectGoodsByBigTypeId(int bigTypeId) {
+        return goodsMapper.selectGoodsByBigTypeId(bigTypeId);
+    }
+
+    @Override
+    public int selectGoodsState(int id) {
+        return goodsMapper.selectGoodsState(id);
     }
 }

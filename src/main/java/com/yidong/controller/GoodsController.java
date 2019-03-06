@@ -5,6 +5,7 @@ import com.yidong.model.GoodsHot;
 import com.yidong.model.Price;
 import com.yidong.service.GoodsService;
 import com.yidong.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
+@Slf4j
 @RestController
 public class GoodsController {
     @Autowired
@@ -36,6 +37,12 @@ public class GoodsController {
      * @return list
      */
     public List setMaxAndMinPriceForGoods(List list){
+        if(list==null){
+            return null;
+        }
+        if(list.size()==0){
+            return null;
+        }
         for(Object goods : list){
             Goods g = (Goods) goods;
             g.setMaxAndMinPrice();
@@ -53,6 +60,7 @@ public class GoodsController {
             Goods goods  = goodsService.selectSingleVipGoods(goodsId);
             goods.setMaxAndMinPrice();
             goods.setMaxAndMinTradePrice();
+            goods.setDetailList();
             return goods;
         }
         else{
@@ -61,13 +69,20 @@ public class GoodsController {
             for(Price p :goods.getPriceList()){
                 p.setTradePrice(0);
             }
+            goods.setDetailList();
             return goods;
         }
     }
 
     @RequestMapping(value = "/goods/typeGoods")
-    public List<Goods> selecrGoodsByTypeId(@RequestParam  int typeId) {
-        return setMaxAndMinPriceForGoods(goodsService.selecrGoodsByTypeId(typeId));
+    public List<Goods> selectGoodsBySmallTypeId(@RequestParam  int typeId) {
+        return setMaxAndMinPriceForGoods(goodsService.selectGoodsBySmallTypeId(typeId));
+    }
+
+
+    @RequestMapping(value = "/goods/bigTypeGoods")
+    public List<Goods> selectGoodsByBigTypeId(@RequestParam  int bigTypeId) {
+        return setMaxAndMinPriceForGoods(goodsService.selectGoodsByBigTypeId(bigTypeId));
     }
 
     @RequestMapping(value = "/goods/nameGoods")
@@ -94,18 +109,19 @@ public class GoodsController {
             }
         });
         List<Goods> goodsList = new ArrayList<Goods>();
-        int size = 3;
-        if(goodsHots.size()<3){
-            size = goodsHots.size();
-        }
+        int size = goodsHots.size();
         for(int i=0;i<size;i++){
             Goods goods = goodsService.selectSingleGoods(goodsHots.get(i).getGoodsId());
+
             goodsList.add(goods);
         }
-        //如果没有商品销售，那么返回3个推荐商品
-        if(goodsHots.size()==0){
-            goodsList = goodsService.selectRecommendGoods(3);
+        /**
+         * 如果没有热销商品找推荐商品替换上
+         */
+        if(size==0){
+            goodsList.addAll(goodsService.selectRecommendGoods(3-size));
         }
+
         return setMaxAndMinPriceForGoods(goodsList);
     }
 

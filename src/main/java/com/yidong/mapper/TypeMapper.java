@@ -9,4 +9,8 @@ public interface TypeMapper {
     List<Type> selectBigType();
 
     List<Type> selectSmallType(int bigTypeId);
+
+
+
+    List<String> selectSchoolName(int smallTypeId);
 }

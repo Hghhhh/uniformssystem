@@ -11,6 +11,7 @@ public class Retail {
     private String time;
     private String userId;
     private int sum;
+    private String schoolName;
 
     public int getGoodsId() {
         return goodsId;
@@ -58,5 +59,13 @@ public class Retail {
 
     public void setSum(int sum) {
         this.sum = sum;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 }

@@ -9,4 +9,10 @@
         SELECT id as typeId ,name  from tb_smalltype where bigTypeId=#{bigTypeId}
     </select>
 
+
+
+    <select id="selectSchoolName" resultType="java.lang.String">
+        SELECT schoolName from tb_school where smallTypeId=#{smallTypeId}
+    </select>
+
 </mapper>

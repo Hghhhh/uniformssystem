@@ -4,17 +4,18 @@ import com.yidong.model.GoodsIdAndBuyNum;
 import com.yidong.model.Orderform;
 import com.yidong.model.OrderformGoods;
 import com.yidong.model.Retail;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 public interface OrderformMapper {
-    int insertOrderform(Orderform orderform);
+    int insertOrderform(@Param("orderform") Orderform orderform, @Param("province") String province, @Param("city") String city, @Param("district") String district);
 
     int insertOrderformGoods(List<OrderformGoods> orderformGoodsList);
 
     int insertOrderformGoodsModel(Map map);
 
-    List<Orderform> selectOrderform(String openId);
+    List<Orderform> selectOrderform(@Param("openId") String openId);
 
     Orderform selectOrderformById(String orderformId);
 
@@ -22,7 +23,7 @@ public interface OrderformMapper {
 
     List<GoodsIdAndBuyNum> selectGoodsIdAndBuyNum(String orderformId);
 
-    int updateIntegral(List<GoodsIdAndBuyNum> goodsIdAndBuyNums);
+    int updateIntegral(Map map);
 
     int insertOrderformIntegral(Map map);
 
@@ -41,4 +42,8 @@ public interface OrderformMapper {
     int insertWholesale(Retail retail);
 
     int reduceIntegral(Map map);
+
+    List<String> getOrderFormId();
+
+    List<String> selectWatingOrderForm();
 }

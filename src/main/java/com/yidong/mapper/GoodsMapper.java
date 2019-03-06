@@ -1,12 +1,10 @@
 package com.yidong.mapper;
 
-import com.yidong.model.Goods;
-import com.yidong.model.GoodsHot;
-import com.yidong.model.GoodsInfo;
-import com.yidong.model.VipGoods;
+import com.yidong.model.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GoodsMapper {
 
@@ -22,7 +20,7 @@ public interface GoodsMapper {
 
     String selectGoodsName(int goodsId);
 
-    List<Goods> selecrGoodsByTypeId(int smallTypeId);
+    List<Goods> selectGoodsBySmallTypeId(int smallTypeId);
 
     List<Goods>  selectGoodsByName(@Param(value="name") String name);
 
@@ -31,4 +29,14 @@ public interface GoodsMapper {
     List<GoodsHot> selectRetailHot();
 
     List<GoodsHot> selectWholeHot();
+
+    GiftInfo selectGiftInfo(int giftId);
+
+    List<Goods> selectGoodsByBigTypeId(int bigTypeId);
+
+
+    int selectGoodsState(int id);
+
+    PriceAndTradePrice selectGoodsPrice(Map map);
+
 }

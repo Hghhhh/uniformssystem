@@ -2,6 +2,7 @@ package com.yidong.service.impl;
 
 import com.yidong.mapper.ShoppingcarMapper;
 import com.yidong.mapper.UserMapper;
+import com.yidong.model.ShoppingCarIdAndBuyNum;
 import com.yidong.model.Shoppingcar;
 import com.yidong.service.ShoppingcarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,30 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
         }
         boolean isVip = Float.valueOf(integral)==-1?false:true;
         if(isVip){
-            return shoppingcarMapper.selectVipShoppingcar(openId);
+            List<Shoppingcar> shoppingcars =shoppingcarMapper.selectVipShoppingcar(openId);
+            for(Shoppingcar shoppingcar:shoppingcars){
+                if(shoppingcar.getShoppingcarGoods().getState()==2){
+                    //商品已售完
+                    shoppingcar.setState(2);
+                }
+                else if(shoppingcar.getShoppingcarGoods().getState()==3){
+                    //商品已下架
+                    shoppingcar.setState(3);
+                }
+            }
+            return shoppingcars;
         }
         else{
             List<Shoppingcar> shoppingcars = shoppingcarMapper.selectShoppingcar(openId);
             for(Shoppingcar shoppingcar:shoppingcars){
+                if(shoppingcar.getShoppingcarGoods().getState()==2){
+                    //商品已售完
+                    shoppingcar.setState(2);
+                }
+                else if(shoppingcar.getShoppingcarGoods().getState()==3){
+                    //商品已下架
+                    shoppingcar.setState(3);
+                }
                 shoppingcar.getShoppingcarGoods().setBatch(1);
             }
             return shoppingcars;
@@ -40,13 +60,18 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
     @Override
     public boolean updateShoppingcarBuyNum(int buyNum, int id) {
         int priceNum = shoppingcarMapper.selectPriceNumByShoppingcarGoodsId(id);
+        Map map = new HashMap();
+        map.put("id",id);
         if(buyNum>priceNum){
+            map.put("buyNum",priceNum);
+            shoppingcarMapper.updateShoppingcarBuyNum(map);
             return false;
         }
-        Map map = new HashMap();
-        map.put("buyNum",buyNum);
-        map.put("id",id);
-        return shoppingcarMapper.updateShoppingcarBuyNum(map)==1?true:false;
+        else{
+            map.put("buyNum",buyNum);
+            return shoppingcarMapper.updateShoppingcarBuyNum(map)==1?true:false;
+        }
+
     }
 
     @Override
@@ -69,9 +94,10 @@ public class ShoppingcarServiceImpl implements ShoppingcarService {
         map.put("buyNum",buyNum);
         map.put("priceId",priceId);
         map.put("goodsId",goodsId);
-        int count = shoppingcarMapper.updateShoppingcarBuyNumWhenInsert(map);
+        ShoppingCarIdAndBuyNum idAndBuyNum = shoppingcarMapper.selectShoppingcarBuyNumWhenInsert(map);
         //如果购物车已有该商品，合并buyNum，否则再添加商品
-        if(count>0){
+        if(idAndBuyNum!=null){
+            updateShoppingcarBuyNum(buyNum+idAndBuyNum.getBuyNum(),Integer.parseInt(idAndBuyNum.getId()));
             return true;
         }
         else{

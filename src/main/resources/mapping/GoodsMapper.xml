@@ -14,6 +14,7 @@
     <id column="id" property="goodsId" jdbcType="INTEGER" />
     <result column="name" property="goodsName" jdbcType="VARCHAR" />
     <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="state" property="state" />
     <collection property="goodsPicture" javaType="ArrayList" ofType="java.lang.String"
                 column="id" select="selectPicture"></collection>
     <collection property="priceList" javaType="ArrayList" ofType="Price"
@@ -25,6 +26,7 @@
     <result column="detail" property="detail" jdbcType="VARCHAR" />
     <result column="integral" property="integral" jdbcType="FLOAT"/>
     <result column="batch" property="batch" jdbcType="INTEGER" />
+    <result column="state" property="state" />
     <association property="allRetail" column="id" select="selectAllRetail">
     </association>
     <association property="monthRetail" column="id" select="selectMonthRetail">
@@ -38,9 +40,17 @@
     <id column="id" property="goodsId" jdbcType="INTEGER" />
     <result column="name" property="goodsName" jdbcType="VARCHAR" />
     <result column="batch" property="batch" />
+    <result column="state" property="state"/>
     <association property="goodsPicture" column="id" select="selectShoppingcarGoodsPicture">
     </association>
   </resultMap>
+  <resultMap id="GiftInfoMap" type="GiftInfo" >
+    <id column="id" property="goodsId" jdbcType="INTEGER" />
+    <result column="name" property="goodsName" jdbcType="VARCHAR" />
+    <association property="goodsPicture" column="id" select="selectShoppingcarGoodsPicture">
+    </association>
+  </resultMap>
+
   <select id="selectRecommendGoods" resultMap="Goods" parameterType="java.lang.Integer">
     SELECT id,name,detail from tb_goods where state!=3 and recommend=1
     <if test="num!=0">
@@ -66,30 +76,49 @@
     SELECT id,name,detail from tb_goods where state!=3 and name like '%${name}%';
   </select>
   <select id="selectSingleGoods" resultMap="DetailGoods">
-    SELECT id,name,detail from tb_goods where state!=3 and id=#{goodsId};
+    SELECT id,name,detail,state from tb_goods where state!=3 and id=#{goodsId};
   </select>
   <select id="selectSingleVipGoods" resultMap="VipGoods">
-    SELECT id,name,detail,batch from tb_goods where id=#{goodsId} and state!=3;
+    SELECT id,name,detail,batch,state from tb_goods where id=#{goodsId} and state!=3;
   </select>
   <select id="selectVipGoods" resultMap="VipGoods" >
     SELECT id,name,detail,batch from tb_goods where state!=3;
   </select>
   <select id="selectGoodsInfo" resultMap="GoodsInfoMap" parameterType="java.lang.Integer">
-    SELECT id,name,batch from tb_goods where id=#{goodsId}
+    SELECT id,name,batch,state from tb_goods where id=#{goodsId}
   </select>
   <select id="selectGoodsName" resultType="java.lang.String">
     SELECT name from tb_goods where id=#{goodsId}
   </select>
 
-  <select id="selecrGoodsByTypeId" resultMap="Goods">
-      SELECT id,name,detail from tb_goods where state!=3 and smallTypeId=#{smalTypeId};
+  <select id="selectGoodsBySmallTypeId" resultMap="Goods">
+      SELECT id,name,detail from tb_goods where state!=3 and smallTypeId=#{smallTypeId};
+  </select>
+
+  <select id="selectGoodsByBigTypeId" resultMap="Goods">
+    SELECT id,name,detail from tb_goods where state!=3 and bigTypeId=#{bigTypeId};
   </select>
   
   <select id="selectRetailHot" resultType="GoodsHot">
-    SELECT  SUM(num) AS saleNum,goodsId FROM tb_retail GROUP BY goodsId
+  SELECT  SUM(num) AS saleNum,tb_retail.goodsId FROM tb_retail GROUP BY tb_retail.goodsId HAVING EXISTS (SELECT id FROM tb_goods WHERE id=tb_retail.goodsId AND state!=3)
   </select>
 
   <select id="selectWholeHot" resultType="GoodsHot">
-    SELECT  SUM(num) AS saleNum,goodsId FROM tb_wholesale GROUP BY goodsId
+    SELECT  SUM(num) AS saleNum,goodsId FROM tb_wholesale GROUP BY goodsId  HAVING EXISTS (SELECT id FROM tb_goods WHERE id=goodsId AND state!=3)
   </select>
+
+  <select id="selectGiftInfo" resultMap="GiftInfoMap" parameterType="java.lang.Integer">
+    SELECT id,name from tb_goods where id=#{giftId}
+  </select>
+
+
+  <select id="selectGoodsState" resultType="java.lang.Integer">
+    SELECT state from tb_goods where id=#{id}
+  </select>
+
+
+  <select id="selectGoodsPrice" resultType="PriceAndTradePrice" parameterType="map">
+    SELECT price,tradePrice from tb_goods_price where id=#{priceId} and goodsId=#{goodsId}
+  </select>
+
 </mapper>

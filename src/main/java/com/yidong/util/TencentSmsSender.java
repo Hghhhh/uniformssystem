@@ -10,19 +10,20 @@ import java.util.Random;
 public class TencentSmsSender {
 
     // 短信应用SDK AppID
-    private static final int APPID = 1400122024;
+    private static final int APPID = 1400171279;
 
     // 短信应用SDK AppKey
-    private static final  String APPKEY = "86dbf88cc0abd417897ea9987eb9cb8f";
+    private static final  String APPKEY = "84759fcbac90b75c4d3865f4505929ac";
 
     // 签名
-    private static final  String SMSSIGN = "东兴隆冻品会";
+    private static final  String SMSSIGN = "鲨鲨服饰";
 
-    private static final int TEMPLATEID = 171182;
+    private static final int TEMPLATEID = 247585;
     public static String sendMessage(String  phoneNumber){
         try {
-            String[] params = {""};
+            String[] params = {"",""};
             params[0] = randomNum();
+            params[1]="5";
             SmsSingleSender ssender = new SmsSingleSender(APPID, APPKEY);
             // 签名参数未提供或者为空时，会使用默认签名发送短信
             SmsSingleSenderResult result = ssender.sendWithParam("86",phoneNumber,TEMPLATEID,params,SMSSIGN,"","");

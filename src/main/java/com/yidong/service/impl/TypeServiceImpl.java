@@ -22,4 +22,9 @@ public class TypeServiceImpl implements TypeService {
     public List<Type> selectSmallType(int typeId) {
         return typeMapper.selectSmallType(typeId);
     }
+
+    @Override
+    public List<String> selectSchoolName(int smallTypeId) {
+        return typeMapper.selectSchoolName(smallTypeId);
+    }
 }

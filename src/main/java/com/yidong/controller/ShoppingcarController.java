@@ -42,11 +42,12 @@ public class ShoppingcarController {
 
     @RequestMapping(value = "/updateBuyNumForShoppingcar")
     public ResponseEntity<Boolean> updateBuyNum(@RequestParam  int buyNum, @RequestParam int shoppingcarId){
+
         if(shoppingcarService.updateShoppingcarBuyNum(buyNum,shoppingcarId)){
-            return  ResponseEntity.ok(true);
+            return ResponseEntity.ok(true);
         }
         else{
-            return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(false,HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -71,4 +72,6 @@ public class ShoppingcarController {
             return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
         }
     }
+
+
 }

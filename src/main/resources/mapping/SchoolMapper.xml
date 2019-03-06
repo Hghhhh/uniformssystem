@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidong.mapper.SchoolMapper">
+
+    <resultMap id="schoolWithThreeType" type="SchoolWithThreeType">
+        <result column="name" property="bigType"/>
+        <collection property="children" column="id" select="selectSchoolWithTwoType" ofType="SchoolWithTwoType"></collection>
+    </resultMap>
+
+    <resultMap id="schoolWithTwoType" type="SchoolWithTwoType">
+        <result column="name" property="smType"/>
+        <collection property="children" column="id" select="selectSchoolNameBySmType" ofType="java.lang.String"></collection>
+    </resultMap>
+
+
+    <select id="selectSchoolName" resultType="java.lang.String" parameterType="java.lang.String">
+        select schoolName from tb_school where schoolName like '%${schoolName}%'
+    </select>
+
+    <select id="selectSchoolNameBySmType" resultType="java.lang.String" >
+        select schoolName from tb_school where smallTypeId=#{id}
+    </select>
+
+    <select id="selectSchoolWithTwoType" resultMap="schoolWithTwoType">
+        select id,name from tb_smalltype where bigTypeId=#{id}
+    </select>
+
+
+    <select id="selectSchool" resultMap="schoolWithThreeType">
+        SELECT id,name from tb_bigtype
+    </select>
+
+</mapper>

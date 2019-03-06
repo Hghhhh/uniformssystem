@@ -1,5 +1,7 @@
 package com.yidong.model;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,10 +22,22 @@ public class Goods {
 
     private String detail;
 
+    private int state;
+
+    private List<String> detailList;
+
     private List<String> goodsPicture;
 
     private List<Price> priceList;
 
+    public void setDetailList(){
+        if(detail==null){
+            return ;
+        }
+        else{
+            this.detailList = Arrays.asList(detail.split(","));
+        }
+    }
 
     public String getDetail() {
         return detail;
@@ -130,5 +144,17 @@ public class Goods {
 
     public void setMinTradePrice(int minTradePrice) {
         this.minTradePrice = minTradePrice;
+    }
+
+    public List<String> getDetailList() {
+        return detailList;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

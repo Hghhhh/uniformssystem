@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,4 +72,29 @@ public class UserServiceImpl implements UserService {
            return integral;
        }
     }
+
+    @Override
+    public boolean setSchoolName(String openId, String schoolName) {
+        Map map = new HashMap();
+        map.put("openId",openId);
+        map.put("schoolName",schoolName);
+        return userMapper.setSchoolName(map)==1?true:false;
+    }
+
+    @Override
+    public String selectSchoolName(String openId) {
+        return userMapper.selectSchoolName(openId);
+    }
+
+    @Override
+    public String selectSchoolNameForVip(String openId) {
+        return userMapper.selectSchoolNameForVip(openId);
+    }
+
+    @Override
+    public List<String> getUserId(){
+        return userMapper.getUserId();
+
+    }
+
 }

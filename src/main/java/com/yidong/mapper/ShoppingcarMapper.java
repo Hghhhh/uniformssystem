@@ -1,6 +1,8 @@
 package com.yidong.mapper;
 
 import java.util.Map;
+
+import com.yidong.model.ShoppingCarIdAndBuyNum;
 import com.yidong.model.Shoppingcar;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,7 +25,7 @@ public interface ShoppingcarMapper {
 
     int selectCarId(String openId);
 
-    int updateShoppingcarBuyNumWhenInsert(Map map);
+    ShoppingCarIdAndBuyNum selectShoppingcarBuyNumWhenInsert(Map map);
 
     Shoppingcar selectShoppingcarGoodsById(int id);
 

@@ -51,9 +51,9 @@
     SELECT priceId from tb_shoppingcar_goods where id=#{id}
     )
   </select>
-  <update id="updateShoppingcarBuyNumWhenInsert" parameterType="map">
-    UPDATE tb_shoppingcar_goods set buyNum=#{buyNum}+buyNum where carId=#{carId} and goodsId=#{goodsId} and priceId=#{priceId}
-  </update>
+  <select id="selectShoppingcarBuyNumWhenInsert" parameterType="map" resultType="ShoppingCarIdAndBuyNum">
+    select id,buyNum from tb_shoppingcar_goods where carId=#{carId} and goodsId=#{goodsId} and priceId=#{priceId}
+  </select>
   <update id="updateShoppingcarBuyNum" parameterType="map">
     UPDATE tb_shoppingcar_goods set buyNum=#{buyNum} where id=#{id}
   </update>

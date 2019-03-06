@@ -18,6 +18,16 @@ public class OrderformGoods extends GoodsInfo {
     private List<String> priceModels;
     private int buyNum;
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    private String code;
+
     public int getPriceId() {
         return priceId;
     }

@@ -3,6 +3,7 @@ package com.yidong.service;
 import com.yidong.model.User;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,4 +26,14 @@ public interface UserService {
     boolean updatePhone(String openId,String phone);
 
     String selectIntegral(String openId);
+
+    boolean setSchoolName(String openId,String schoolName);
+
+
+    String selectSchoolName(String openId);
+
+
+    String selectSchoolNameForVip(String openId);
+
+    List<String> getUserId();
 }

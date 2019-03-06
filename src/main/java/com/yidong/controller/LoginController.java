@@ -4,8 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import com.yidong.config.WxPayConfig;
 import com.yidong.model.User;
+import com.yidong.service.CodeService;
 import com.yidong.service.UserService;
 import com.yidong.util.TencentSmsSender;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +22,8 @@ import org.weixin4j.WeixinException;
 import org.weixin4j.http.HttpsClient;
 import org.weixin4j.http.Response;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 登录
  * @author hgh
@@ -29,6 +34,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CodeService codeService;
 
     /**
      * 小程序后台登录，向微信平台发送获取access_token请求，并返回openId
@@ -100,9 +108,39 @@ public class LoginController {
      * @return 验证码
      */
     @RequestMapping(value="/getSms")
-    public String getSms(@RequestParam String phone){
-        return TencentSmsSender.sendMessage(phone);
+    public boolean getSms(@RequestParam String phone){
+       // return TencentSmsSender.sendMessage(phone);
+        String code = TencentSmsSender.sendMessage(phone);
+        if(code==null){
+            return false;
+        }
+        codeService.valuePut(phone,code);
+        codeService.expirse(phone,5, TimeUnit.MINUTES);
+        return true;
     }
+
+    /**
+     * 根据手机号去redis中判断code和输入的code是否一样
+     * @param phone
+     * @param code
+     * @return
+     */
+    @RequestMapping(value="/verifyCode")
+    public boolean verifyCode(@RequestParam String phone,@RequestParam String code,@RequestParam String openId){
+        String findCode = (String)codeService.getValue(phone);
+        if(findCode==null){
+        }
+        else{
+            if(findCode.equals(code)){
+                if(userService.updatePhone(openId,phone)){
+                    codeService.remove(phone);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 
     /***
      * 设置用户的手机号
@@ -110,6 +148,7 @@ public class LoginController {
      * @param phone
      * @return
      */
+    /*
     @RequestMapping(value = "/setPhone")
     public ResponseEntity<String> setPhone(@RequestParam String openId,@RequestParam String phone) {
        boolean flag =  userService.updatePhone(openId,phone);
@@ -119,10 +158,24 @@ public class LoginController {
        else{
            return new ResponseEntity(phone,HttpStatus.BAD_REQUEST);
        }
-    }
+    }*/
 
     @RequestMapping("/getIntegral")
-    public Float getIntegral(@RequestParam String openId){
-        return Float.valueOf(userService.selectIntegral(openId));
+    public HashMap getIntegral(@RequestParam String openId){
+        HashMap map = new HashMap(2);
+        map.put("integral",Float.valueOf(userService.selectIntegral(openId)));
+        map.put("schoolName",userService.selectSchoolNameForVip(openId));
+        return map;
+    }
+
+
+    @RequestMapping("/setSchoolName")
+    public ResponseEntity<Boolean> setSchoolName(@RequestParam String schoolName,@RequestParam String openId){
+        return ResponseEntity.ok(userService.setSchoolName(openId,schoolName));
+    }
+
+    @RequestMapping("/getSchoolName")
+    public String selectSchoolName(@RequestParam String openId){
+        return userService.selectSchoolName(openId);
     }
 }

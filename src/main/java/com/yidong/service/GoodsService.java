@@ -12,10 +12,14 @@ public interface GoodsService {
     List<VipGoods> selectVipGoods();
     VipGoods selectSingleVipGoods(int goodsId);
     Goods selectSingleGoods(int goodsId);
-    List<Goods> selecrGoodsByTypeId(int smallTypeId);
+    List<Goods> selectGoodsBySmallTypeId(int smallTypeId);
 
     List<Goods>  selectGoodsByName(String name);
     List<Goods> selectRecommendGoods(int num);
 
     List<GoodsHot> selectHotGoods();
+
+    List<Goods> selectGoodsByBigTypeId(int bigTypeId);
+
+    int selectGoodsState(int id);
 }

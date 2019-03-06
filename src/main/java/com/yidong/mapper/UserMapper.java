@@ -3,6 +3,7 @@ package com.yidong.mapper;
 import com.yidong.model.User;
 import com.yidong.model.UserInfo;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserMapper {
@@ -22,4 +23,14 @@ public interface UserMapper {
     int updatePhone(Map<String,String> map);
 
     String selectIntegral(String openId);
+
+
+    String selectSchoolName(String openId);
+
+    int setSchoolName(Map map);
+
+
+    String selectSchoolNameForVip(String openId);
+
+    List<String> getUserId();
 }

@@ -24,7 +24,7 @@
   </select>
   <select id="isVip" resultType="java.lang.String" parameterType="java.lang.String" >
     select
-    goodsId
+    schoolName
     from tb_vip
     where openId = #{openId,jdbcType=VARCHAR}
   </select>
@@ -51,4 +51,20 @@
     update tb_user set phone = #{phone,jdbcType=VARCHAR}
     where openId = #{openId,jdbcType=VARCHAR}
   </update>
+
+  <select id="selectSchoolName" parameterType="java.lang.String" resultType="java.lang.String">
+    select schoolName from tb_user where openId=#{openId}
+  </select>
+
+  <select id="selectSchoolNameForVip" parameterType="java.lang.String" resultType="java.lang.String">
+    select schoolName from tb_vip where openId=#{openId}
+  </select>
+
+  <update id="setSchoolName" parameterType="map" >
+    update tb_user set schoolName=#{schoolName} where openId=#{openId}
+  </update>
+  
+  <select id="getUserId" resultType="java.lang.String">
+    select openId from tb_user;
+  </select>
 </mapper>

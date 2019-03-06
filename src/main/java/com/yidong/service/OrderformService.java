@@ -7,18 +7,22 @@ import com.yidong.model.OrderformGoods;
 import java.util.List;
 
 public interface OrderformService {
-    boolean insertOrderform(Orderform orderform);
+    int insertOrderform(Orderform orderform);
 
     boolean insertOrderformGoods(List<OrderformGoods> orderformGoodsList);
 
     boolean insertOrderformGoodsModel(int id,List<String> models);
 
-    List<Orderform> selectOrderform(String openId);
+    List<Orderform> selectOrderform(String openI);
 
     Orderform selectOrderformById(String orderformId);
 
     boolean updateOrderform(String orderformId,String remarksWhenRefund,Integer state);
 
     String selectOrderformIdIsExistInIntegral(String orderformId);
+
+    List<String> getOrderFormId();
+
+    List<String> selectWatingOrderForm();
 
 }

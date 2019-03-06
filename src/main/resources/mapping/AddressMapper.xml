@@ -13,7 +13,7 @@
    id, name, address,detailAddress, phone, state
   </sql>
   <select id="selectByPrimaryKey" resultMap="AddressMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_address
     where id in (
