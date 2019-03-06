@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yidong.mapper.CommentMapper" >
+  <resultMap id="CommentMap" type="Comment" >
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="star" property="star" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="DATE" />
+    <association property="userInfo" column="userId" select="com.yidong.mapper.UserMapper.selectUserInfo">
+    </association>
+    <collection property="modelNames" javaType="ArrayList" ofType="java.lang.String"
+                column="orderformGoodsId" select="selectModelName"></collection>
+  </resultMap>
+
+  <select id="selectModelName" resultType="java.lang.String" parameterType="java.lang.String">
+    SELECT modelName from tb_orderform_model where orderformGoodsId=#{orderformGoodsId}
+  </select>
+
+  <select id="selectCommentByGoodsId" resultMap="CommentMap" parameterType="java.lang.Integer">
+    SELECT userId,content,star,createTime,orderformGoodsId from tb_comment where goodsId=#{goodsId} and star=1 order by createTime desc
+  </select>
+
+  <insert id="insertComment" parameterType="map">
+    INSERT into tb_comment values(#{openId},#{content},#{star},#{goodsId},now(),#{orderformGoodsId})
+  </insert>
+
+  <insert id="insertCommentForRandom" parameterType="map">
+    INSERT into tb_comment values(#{openId},#{content},#{star},#{goodsId},#{time},#{orderformGoodsId})
+  </insert>
+
+</mapper>

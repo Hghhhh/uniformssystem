@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yidong.mapper.PriceMapper" >
+    <resultMap id="PriceMap" type="Price" >
+        <id column="id" property="priceId" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="INTEGER" />
+        <result column="tradePrice" property="tradePrice" jdbcType="INTEGER" />
+       <!-- <result column="integral" property="integral"></result>-->
+        <collection property="models" javaType="ArrayList" ofType="java.lang.String"
+                    column="id" select="selectModel"></collection>
+    </resultMap>
+    <resultMap id="PriceForGoodsDetailMap" type="Price" >
+        <id column="id" property="priceId" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="INTEGER" />
+        <!-- <result column="integral" property="integral"></result>-->
+        <association property="num" column="id" select="selectGoodsNum">
+        </association>
+        <collection property="models" javaType="ArrayList" ofType="java.lang.String"
+                    column="id" select="selectModel"></collection>
+    </resultMap>
+    <resultMap id="VipPriceMap" type="Price" >
+        <id column="id" property="priceId" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="INTEGER" />
+        <result column="tradePrice" property="tradePrice" jdbcType="INTEGER" />
+        <!-- <result column="integral" property="integral"></result>-->
+        <association property="num" column="id" select="selectGoodsNum">
+        </association>
+        <collection property="models" javaType="ArrayList" ofType="java.lang.String"
+                    column="id" select="selectModel"></collection>
+    </resultMap>
+    <resultMap id="ModelMap" type="Model" >
+        <result column="name" property="smallModelName" jdbcType="INTEGER" />
+        <association property="bigModelName" column="bigModelId" select="selectBigModelName">
+        </association>
+    </resultMap>
+    <select id="selectPrice" resultMap="PriceMap">
+        select * from tb_goods_price where goodsId=#{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectPriceForGoodsDetail" resultMap="PriceForGoodsDetailMap">
+        select * from tb_goods_price where goodsId=#{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectGoodsNum" resultType="java.lang.Integer">
+        select num from tb_price_num where priceId = #{id}
+    </select>
+    <select id="selectPricePrice" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select price from tb_goods_price where id=#{priceId,jdbcType=INTEGER}
+    </select>
+    <select id="selectTradePrice" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select tradePrice from tb_goods_price where id=#{priceId,jdbcType=INTEGER}
+    </select>
+  <!--  <select id="selectPriceIntegral" resultType="java.lang.Float" parameterType="java.lang.Integer">
+        select integral from tb_goods_price where id=#{priceId,jdbcType=INTEGER}
+    </select>-->
+    <select id="selectPriceForVip" resultMap="VipPriceMap">
+        select * from tb_goods_price where goodsId=#{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectModel"  resultMap="ModelMap">
+        SELECT name,bigModelId from tb_small_model where id in (
+          SELECT smallModelId as id from tb_price_model where priceId=#{id}
+        )
+    </select>
+    <select id="selectBigModelName" resultType="java.lang.String">
+        SELECT modelName as bigModelName from tb_big_model where id=#{bigModelId}
+    </select>
+    <update id="reduceNum" >
+        update tb_price_num set num=num-#{buyNum} where priceId=#{priceId}
+    </update>
+    <update id="returnNum">
+        update tb_price_num set num=num+#{buyNum} where priceId=#{priceId}
+    </update>
+
+    <select id="selectNum" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select num from tb_price_num where priceId=#{priceId}
+    </select>
+
+    <select id="selectCode" resultType="java.lang.String">
+        select code from tb_goods_price where id=#{priceId} and goodsId=#{goodsId}
+    </select>
+</mapper>

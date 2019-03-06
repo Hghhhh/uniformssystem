@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yidong.mapper.AddressMapper" >
+  <resultMap id="AddressMap" type="Address" >
+    <id column="id" property="id" jdbcType="INTEGER"></id>
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="detailAddress" property="detailAddress" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+   id, name, address,detailAddress, phone, state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="AddressMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_address
+    where id in (
+      SELECT addressId as id from tb_user_address where userId=#{userId}
+    )
+  </select>
+
+  <select id="selectByAddressId" resultMap="AddressMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_address
+    where id =#{addressId}
+  </select>
+  <select id="selectDefaultAddress" resultMap="AddressMap" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_address
+    where state=1 and id in(select addressId  as id from tb_user_address where userId=#{userId})
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_address
+    where id = #{id,jdbcType=INTEGER};
+  </delete>
+  <insert id="insert" parameterType="Address" useGeneratedKeys="true" keyProperty="id"  >
+    insert into tb_address (name, address,detailAddress,
+      phone, state)
+    values (#{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{detailAddress,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertUserAddress" parameterType="map" >
+    insert into tb_user_address(userId,addressId) values(#{userId},#{id})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="Address" >
+    update tb_address
+    set name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      detailAddress = #{detailAddress,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      state=#{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateStateByUserId">
+      UPDATE tb_address set state=0 where id in (
+      SELECT addressId as id from tb_user_address where userId=#{userId}
+    ) AND state=1;
+  </update>
+  <update id="updateStateByPrimaryKey">
+    update tb_address
+    set state=1
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

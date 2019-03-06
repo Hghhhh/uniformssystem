@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yidong.mapper.DiscountMapper" >
+  <resultMap id="DiscountMap" type="com.yidong.model.Discount" >
+    <result column="discountCondition" property="discountCondition" jdbcType="INTEGER" />
+    <result column="reduce" property="reduce" jdbcType="INTEGER" />
+    <result column="discount" property="discount" jdbcType="REAL" />
+    <result column="start" property="start"  />
+    <result column="end" property="end"  />
+  </resultMap>
+  <resultMap id="GiftMap" type="com.yidong.model.Gift" >
+    <result column="fullCondition" property="fullCondition"></result>
+    <result column="gift" property="goodsId" />
+    <result column="num" property="num"></result>
+    <association property="goodsName" column="gift" select="com.yidong.mapper.GoodsMapper.selectGoodsName">
+    </association>
+    <association property="goodsPicture" column="gift" select="com.yidong.mapper.GoodsMapper.selectShoppingcarGoodsPicture">
+    </association>
+  </resultMap>
+
+  <select id="selectDiscount" resultMap="DiscountMap">
+    SELECT * from tb_discount
+  </select>
+  
+  <select id="selectGift" resultMap="GiftMap">
+    select * from tb_gift
+  </select>
+
+  <select id="selectTransportFree" resultType="TransportFee" >
+    SELECT freeConditions as feeConditions,free as fee from tb_freeshipping
+  </select>
+</mapper>

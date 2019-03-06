@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yidong.mapper.ShoppingcarMapper">
+  <resultMap id="Shoppingcar" type="Shoppingcar">
+    <id column="id" property="shoppingcarId"></id>
+    <result column="buyNum" property="buyNum"></result>
+    <result column="state" property="state"></result>
+    <result column="priceId" property="priceId" ></result>
+    <association property="price" column="priceId" select="com.yidong.mapper.PriceMapper.selectPricePrice">
+    </association>
+    <!--<association property="integral" column="priceId" select="com.yidong.mapper.PriceMapper.selectPriceIntegral">
+    </association>-->
+    <association property="shoppingcarGoods" column="goodsId" select="com.yidong.mapper.GoodsMapper.selectGoodsInfo"></association>
+    <collection property="priceModels" column="priceId" select="selectPriceModel"></collection>
+  </resultMap>
+  <resultMap id="VipShoppingcar" type="Shoppingcar">
+    <id column="id" property="shoppingcarId"></id>
+    <result column="buyNum" property="buyNum"></result>
+    <result column="state" property="state"></result>
+    <result column="priceId" property="priceId" ></result>
+    <association property="price" column="priceId" select="com.yidong.mapper.PriceMapper.selectTradePrice">
+    </association>
+    <!--<association property="integral" column="priceId" select="com.yidong.mapper.PriceMapper.selectPriceIntegral">
+    </association>-->
+    <association property="shoppingcarGoods" column="goodsId" select="com.yidong.mapper.GoodsMapper.selectGoodsInfo"></association>
+    <collection property="priceModels" column="priceId" select="selectPriceModel"></collection>
+  </resultMap>
+
+  <select id="selectPriceModel" resultType="java.lang.String">
+    select name from tb_small_model where id in (
+      select smallModelId from tb_price_model where priceId=#{priceId}
+    )
+  </select>
+
+  <select id="selectShoppingcar" resultMap="Shoppingcar">
+    SELECT * from tb_shoppingcar_goods where carId=(
+      select id from tb_shoppingcar where userId=#{openId}
+    )
+  </select>
+  <select id="selectVipShoppingcar" resultMap="VipShoppingcar">
+  SELECT * from tb_shoppingcar_goods where carId=(
+  select id from tb_shoppingcar where userId=#{openId}
+  )
+</select>
+
+  <select id="selectShoppingcarGoodsById" resultMap="Shoppingcar">
+    SELECT * from tb_shoppingcar_goods where id=#{id}
+  </select>
+  <select id="selectPriceNumByShoppingcarGoodsId" resultType="java.lang.Integer">
+    SELECT num from tb_price_num where priceId = (
+    SELECT priceId from tb_shoppingcar_goods where id=#{id}
+    )
+  </select>
+  <select id="selectShoppingcarBuyNumWhenInsert" parameterType="map" resultType="ShoppingCarIdAndBuyNum">
+    select id,buyNum from tb_shoppingcar_goods where carId=#{carId} and goodsId=#{goodsId} and priceId=#{priceId}
+  </select>
+  <update id="updateShoppingcarBuyNum" parameterType="map">
+    UPDATE tb_shoppingcar_goods set buyNum=#{buyNum} where id=#{id}
+  </update>
+  <update id="updateShoppingcarState" parameterType="map">
+    UPDATE tb_shoppingcar_goods set state=#{state} where id=#{id}
+  </update>
+  <delete id="deleteShoppingcarGoods">
+    DELETE from tb_shoppingcar_goods where id=#{id}
+  </delete>
+  <delete id="deleteShoppingcarGoodsByMap">
+    DELETE from tb_shoppingcar_goods where carId=#{carId} and goodsId = #{goodsId} and priceId=#{priceId}
+  </delete>
+  <insert id="insertShoppingcarGoods" parameterType="map">
+  insert into tb_shoppingcar_goods (carId,goodsId,buyNum,priceId,state)
+  values (#{carId},#{goodsId},#{buyNum},#{priceId},0);
+</insert>
+  <select id="selectCarId" resultType="java.lang.Integer">
+    SELECT id from tb_shoppingcar where userId=#{openId}
+  </select>
+</mapper>

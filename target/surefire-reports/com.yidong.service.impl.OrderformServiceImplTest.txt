@@ -1,0 +1,42 @@
+-------------------------------------------------------------------------------
+Test set: com.yidong.service.impl.OrderformServiceImplTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.265 s <<< FAILURE! - in com.yidong.service.impl.OrderformServiceImplTest
+insertOrderformGoods(com.yidong.service.impl.OrderformServiceImplTest)  Time elapsed: 0.25 s  <<< ERROR!
+org.springframework.jdbc.BadSqlGrammarException: 
+
+### Error updating database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' 
+      (
+      '201810252049454188813',
+      1,
+      '测试商品2',
+      '' at line 1
+### The error may involve com.yidong.mapper.OrderformMapper.insertOrderformGoods-Inline
+### The error occurred while setting parameters
+### SQL: insert into tb_orderform_goods     (orderformId,goodsId,goodsName,goodsPicture,goodsPrice, buyNum,priceId)     values              (       ?,       ?,       ?,       ?,       ?,       ?,       ?       );      ,        (       ?,       ?,       ?,       ?,       ?,       ?,       ?       );
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' 
+      (
+      '201810252049454188813',
+      1,
+      '测试商品2',
+      '' at line 1
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' 
+      (
+      '201810252049454188813',
+      1,
+      '测试商品2',
+      '' at line 1
+	at com.yidong.service.impl.OrderformServiceImplTest.insertOrderformGoods(OrderformServiceImplTest.java:71)
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: 
+You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' 
+      (
+      '201810252049454188813',
+      1,
+      '测试商品2',
+      '' at line 1
+	at com.yidong.service.impl.OrderformServiceImplTest.insertOrderformGoods(OrderformServiceImplTest.java:71)
+
+insertOrderform(com.yidong.service.impl.OrderformServiceImplTest)  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
+	at com.yidong.service.impl.OrderformServiceImplTest.insertOrderform(OrderformServiceImplTest.java:44)
+

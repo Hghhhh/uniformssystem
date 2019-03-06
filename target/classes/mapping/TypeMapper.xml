@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yidong.mapper.TypeMapper" >
+    <select id="selectBigType" resultType="Type">
+        select id as typeId ,name from tb_bigtype
+    </select>
+
+    <select id="selectSmallType" resultType="Type">
+        SELECT id as typeId ,name  from tb_smalltype where bigTypeId=#{bigTypeId}
+    </select>
+
+
+
+    <select id="selectSchoolName" resultType="java.lang.String">
+        SELECT schoolName from tb_school where smallTypeId=#{smallTypeId}
+    </select>
+
+</mapper>

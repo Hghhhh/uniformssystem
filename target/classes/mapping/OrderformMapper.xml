@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yidong.mapper.OrderformMapper" >
+  <resultMap id="OrderformMap" type="Orderform" >
+    <id column="id" property="orderformId" jdbcType="VARCHAR" />
+    <result column="sumFirst" property="sumFirst" jdbcType="INTEGER" />
+    <result column="sumFinal" property="sumFinal" jdbcType="INTEGER" />
+    <result column="transportFee" property="transportFee" jdbcType="INTEGER" />
+    <result column="userId" property="openId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="remarksWhenOrder" property="remarksWhenOrder" jdbcType="VARCHAR" />
+    <result column="remarksWhenRefund" property="remarksWhenRefund" jdbcType="VARCHAR" />
+    <result column="remarksServiceReturn" property="remarksServiceReturn" jdbcType="VARCHAR" />
+    <result column="giftId" property="giftId" jdbcType="INTEGER" />
+    <result column="giftNum" property="giftNum" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="isVip" property="isVip" />
+    <association property="integralOrder" column="id" select="selectOrderformIdIsExistInIntegral">
+    </association>
+    <association property="express" column="id" select="selectExpress"></association>
+    <collection property="orderformGoods" javaType="ArrayList" ofType="OrderformGoods" column="id"
+                select="selectOrderformGoods">
+    </collection>
+  </resultMap>
+  <select id="selectExpress" resultType="Express">
+    select DISTINCT expressNumber,expressCompany,delivery from tb_express where orderformId=#{id}
+  </select>
+  <resultMap id="OrderformGoodsMap" type="OrderformGoods">
+    <result column="id" property="orderformGoodsId"></result>
+    <result column="goodsId" property="goodsId"></result>
+    <result column="goodsName" property="goodsName"></result>
+    <result column="goodsPicture" property="goodsPicture"></result>
+    <result column="goodsPrice" property="goodsPrice"></result>
+    <result column="priceId" property="priceId"></result>
+    <result column="buyNum" property="buyNum"></result>
+    <collection property="priceModels" javaType="ArrayList" ofType="java.lang.String" column="id"
+                select="selectOrderformModel">
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sumFirst, sumFinal, transportFee, userId, name, address, phone, remarksWhenOrder, 
+    remarksWhenRefund, remarksServiceReturn,
+    giftId, giftNum, state, createTime,schoolName,isVip
+  </sql>
+
+  <select id="selectOrderform" resultMap="OrderformMap">
+    SELECT * from tb_orderform where userId=#{openId} order by createTime desc
+  </select>
+
+  <select id="selectOrderformById" resultMap="OrderformMap" parameterType="java.lang.String">
+    SELECT * from tb_orderform where id=#{orderformId}
+  </select>
+  <select id="selectOrderformGoods" resultMap="OrderformGoodsMap">
+    SELECT * from tb_orderform_goods where orderformId=#{id}
+  </select>
+  <select id="selectOrderformModel" resultType="java.lang.String">
+    SELECT modelName from tb_orderform_model where orderformGoodsId=#{id}
+  </select>
+  <select id="selectGoodsIdAndBuyNum" resultType="GoodsIdAndBuyNum" >
+    SELECT buyNum,integral from tb_orderform_goods,tb_goods where orderformId=#{orderformId} and tb_goods.id=goodsId
+  </select>
+  <insert id="insertOrderform" parameterType="Orderform">
+    insert into tb_orderform values (#{orderform.orderformId},#{orderform.sumFirst},#{orderform.sumFinal},#{orderform.transportFee},#{orderform.openId},#{orderform.name},#{orderform.address},
+    #{orderform.phone},#{orderform.remarksWhenOrder},#{orderform.remarksWhenRefund},#{orderform.remarksServiceReturn},#{orderform.giftId},#{orderform.giftNum},#{orderform.state},now(),#{orderform.schoolName},#{orderform.isVip},#{province},#{city},#{district},now());
+  </insert>
+  <insert id="insertOrderformGoods" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="orderformGoodsId">
+  insert into tb_orderform_goods
+  (orderformId,goodsId,goodsName,goodsPicture,goodsPrice, buyNum,priceId,code)
+  values
+  <foreach collection ="list" item="orderformGoods" index= "index" separator =",">
+    (
+    #{orderformGoods.orderformId},
+    #{orderformGoods.goodsId},
+    #{orderformGoods.goodsName},
+    #{orderformGoods.goodsPicture},
+    #{orderformGoods.goodsPrice},
+    #{orderformGoods.buyNum},
+    #{orderformGoods.priceId},
+    #{orderformGoods.code}
+    )
+  </foreach >
+</insert>
+  <insert id="insertOrderformGoodsModel" parameterType="map" >
+    insert into tb_orderform_model values
+    <foreach collection ="models" item="model" index= "index" separator =",">
+      (
+       #{id},
+       #{model}
+      )
+    </foreach>
+  </insert>
+  <update id="updateOrderform" parameterType="map">
+    update tb_orderform
+    <trim prefix="set" suffixOverrides=",">
+      <if test="state!=null">
+        state=#{state},
+      </if>
+      <if test="remarksWhenRefund!=null">
+        remarksWhenRefund=#{remarksWhenRefund},
+      </if>
+      <if test="stateUpdateTime!=null">
+        stateUpdateTime=#{stateUpdateTime},
+      </if>
+    </trim>
+    where id=#{orderformId}
+  </update>
+  
+  <update id="updateIntegral" parameterType="map">
+    update tb_vip set integral = integral + #{incIntegral}  where schoolName=#{schoolName}
+  </update>
+
+ <insert id="insertOrderformIntegral" parameterType="map">
+    insert into tb_orderform_integral values(#{orderformId},#{userId},#{integral})
+  </insert>
+
+  <update id="reduceIntegral"  parameterType="map">
+     update tb_vip set integral=integral-(#{integral}/100) where openId=#{userId}
+  </update>
+
+  <select id="selectUserIdAndIntegralByOrderformId" resultType="map">
+    SELECT userId,integral from tb_orderform_integral where orderformId=#{orderformId};
+    DELETE FROM  tb_orderform_integral  where orderformId=#{orderformId};
+  </select>
+
+  <select id="selectOrderformIdIsExistInIntegral" resultType="java.lang.String">
+    select orderformId from  tb_orderform_integral where orderformId=#{id}
+  </select>
+  <update id="updateVipIntegral" parameterType="map">
+    update tb_vip set integral=integral+(#{integral}/100) where openId=#{userId};
+  </update>
+
+  <delete id="deleteOrderfornIntegral">
+    DELETE from tb_orderform_integral where orderformId=#{orderformId}
+  </delete>
+
+  <select id="selectVipUserByOrderformId" resultType="java.lang.String">
+    select openId from tb_vip where openId=(select userId from tb_orderform where id=#{orderformId})
+  </select>
+
+  <insert id="insertRetail" parameterType="Retail">
+    insert into tb_retail values (#{goodsId},#{orderformId},#{num},#{time},#{userId},#{sum},#{schoolName});
+  </insert>
+
+  <insert id="insertWholesale" parameterType="Retail">
+    insert into tb_wholesale values (#{goodsId},#{orderformId},#{num},#{time},#{sum},#{schoolName});
+  </insert>
+
+  <select id="getOrderFormId" resultType="java.lang.String">
+    SELECT id from tb_orderform;
+  </select>
+
+  <select id="selectWatingOrderForm" resultType="java.lang.String">
+    SELECT id from tb_orderform where state=6 and DATEDIFF(now(),stateUpdateTime)>7
+  </select>
+</mapper>
