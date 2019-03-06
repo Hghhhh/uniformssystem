@@ -4,7 +4,30 @@
     <option name="GROUP_BY_SEVERITY" value="true" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="245a7f96-b989-4ec1-bc5c-06698485d373" name="Default" comment="" />
+    <list default="true" id="245a7f96-b989-4ec1-bc5c-06698485d373" name="Default" comment="鲨鲨服饰微信后台代码">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/UniformSystem" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/compiler.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/encodings.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/inspectionProfiles/Project_Default.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_3.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_3.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/libraries/Maven__com_fasterxml_classmate_1_3_4.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_9_0.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_9_6.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_9_6.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_9_6.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/misc.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/modules.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/uiDesigner.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/.idea/workspace.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/UniformWebSystem.iml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/mvnw" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/mvnw.cmd" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/pom.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/UniformWebSystem/target/demo-0.0.1-SNAPSHOT.jar.original" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/后台系统接口.doc" afterPath="" />
+    </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -60,7 +83,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="接口API.md" pinned="false" current-in-tab="false">
+      <file leaf-file-name="接口API.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/接口API.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -73,8 +96,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uniformssystem.iml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="uniformssystem.iml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/uniformssystem.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mvnw" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mvnw">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mvnw.cmd" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mvnw.cmd">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -257,11 +310,6 @@
             <path>
               <item name="uniformssystem" type="b2602c69:ProjectViewProjectNode" />
               <item name="uniformssystem" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="uniformssystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="uniformssystem" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -662,7 +710,7 @@
       <workItem from="1551358429905" duration="1162000" />
       <workItem from="1551443624118" duration="111000" />
       <workItem from="1551451874581" duration="1653000" />
-      <workItem from="1551843247925" duration="2756000" />
+      <workItem from="1551843247925" duration="3127000" />
     </task>
     <task id="LOCAL-00001" summary="实现了收货地址、购物车、查询商品功能">
       <created>1540115801649</created>
@@ -917,7 +965,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="433229000" />
+    <option name="totallyTimeSpent" value="433600000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
@@ -1038,21 +1086,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yidong/model/Price.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="17" column="18" lean-forward="false" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/yidong/model/Model.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/guohanghuang.cn.jks" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/yidong/controller/ShoppingcarController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-869">
@@ -1456,14 +1489,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/接口API.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-            <folding />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/mvnw">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mvnw.cmd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1472,6 +1518,17 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/接口API.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="0">
+            <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <folding />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
