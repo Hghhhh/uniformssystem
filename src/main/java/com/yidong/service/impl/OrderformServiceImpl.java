@@ -205,19 +205,15 @@ public class OrderformServiceImpl implements OrderformService {
                 integralMap.put("incIntegral",incIntegral);
                 orderformMapper.updateIntegral(integralMap);
                 //订单完结，订单不是vip的，则添加零售表
-                for(OrderformGoods orderformGoods : orderform.getOrderformGoods()){
-                    retail.setGoodsId(orderformGoods.getGoodsId());
-                    retail.setNum(orderformGoods.getBuyNum());
-                    orderformMapper.insertRetail(retail);
-                }
+                retail.setGoodsId(orderform.getOrderformGoods().get(0).getGoodsId());
+                retail.setNum(orderform.getOrderformGoods().get(0).getBuyNum());
+                orderformMapper.insertRetail(retail);
             }
             else{
                 //订单完结，订单是vip的，则添加批发表
-                for(OrderformGoods orderformGoods : orderform.getOrderformGoods()){
-                    retail.setGoodsId(orderformGoods.getGoodsId());
-                    retail.setNum(orderformGoods.getBuyNum());
-                    orderformMapper.insertWholesale(retail);
-                }
+                retail.setGoodsId(orderform.getOrderformGoods().get(0).getGoodsId());
+                retail.setNum(orderform.getOrderformGoods().get(0).getBuyNum());
+                orderformMapper.insertWholesale(retail);
             }
         }
         //如果退款，判断是不是积分付款的，是的话退还积分
